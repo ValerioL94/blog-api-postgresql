@@ -1,0 +1,36 @@
+{
+  "name": "blog-backend",
+  "version": "1.0.0",
+  "description": "API only backend site express-typescript-postgresql-prisma",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node --watch --env-file=.env app.ts",
+    "build": "tsc",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ValerioL94/blog-api-postgresql.git"
+  },
+  "keywords": [
+    "backend",
+    "restful",
+    "api",
+    "express",
+    "postgresql",
+    "prisma"
+  ],
+  "author": "ValerioL94",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ValerioL94/blog-api-postgresql/issues"
+  },
+  "homepage": "https://github.com/ValerioL94/blog-api-postgresql#readme",
+  "devDependencies": {
+    "@types/node": "^22.5.4",
+    "prisma": "^5.19.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  }
+}
