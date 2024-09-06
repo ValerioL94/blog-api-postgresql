@@ -1,6 +1,6 @@
 import express from 'express';
-import { router as usersRouter } from './users';
-import { router as postsRouter } from './posts';
+import { router as userRouter } from './user';
+import { router as postRouter } from './post';
 
 export const router = express.Router();
 
@@ -10,5 +10,5 @@ router.get('/', (req, res) => {
     paths: ['/users', '/posts', '/posts/comments'],
   });
 });
-router.use('/users', usersRouter);
-router.use('/posts', postsRouter);
+router.use('/users', userRouter);
+router.use('/posts', postRouter);
