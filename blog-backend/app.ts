@@ -9,6 +9,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.get('/', (req, res) => res.redirect('/api'));
 app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler

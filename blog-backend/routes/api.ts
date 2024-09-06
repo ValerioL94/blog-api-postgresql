@@ -7,7 +7,7 @@ export const router = express.Router();
 router.get('/', (req, res) => {
   res.json({
     navigation: 'From /api you can get to the following paths',
-    paths: ['/users', '/posts', 'posts/comments'],
+    paths: ['/users', '/posts', '/posts/comments'],
   });
 });
 router.use('/users', usersRouter);
