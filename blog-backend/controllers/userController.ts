@@ -1,10 +1,10 @@
 import asyncHandler from 'express-async-handler';
 import { body } from 'express-validator';
 
-export const log_in = asyncHandler(async (req, res, next) => {
+export const user_log_in = asyncHandler(async (req, res, next) => {
   res.json({ message: 'wip' });
 });
-export const sign_up = [
+export const user_sign_up = [
   body(),
   asyncHandler(async (req, res, next) => {
     res.json({ message: 'wip' });
