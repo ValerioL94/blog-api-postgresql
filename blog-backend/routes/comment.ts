@@ -5,7 +5,8 @@ import {
   comment_create,
   comment_update,
   comment_delete,
-} from '../controllers/commentController';
+} from '../controllers/commentController.ts';
+
 export const router = express.Router({ mergeParams: true });
 
 router.get('/', comment_list);

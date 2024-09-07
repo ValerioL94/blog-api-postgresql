@@ -1,8 +1,8 @@
 import { fromZodError } from 'zod-validation-error';
 import asyncHandler from 'express-async-handler';
-import { UserSchema } from '../utils/zodSchema';
+import { UserSchema } from '../utils/zodSchema.ts';
 import bcrypt from 'bcryptjs';
-import { prisma } from '../prisma/client';
+import { prisma } from '../prisma/client.ts';
 import jwt from 'jsonwebtoken';
 
 export const user_sign_up = asyncHandler(async (req, res, next) => {

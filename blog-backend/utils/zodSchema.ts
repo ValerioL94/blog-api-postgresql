@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { prisma } from '../prisma/client';
+import { prisma } from '../prisma/client.ts';
 
 export const UserSchema = z
   .object({
