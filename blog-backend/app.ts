@@ -3,12 +3,14 @@ import createError, { HttpError } from 'http-errors';
 import passport from 'passport';
 import cors from 'cors';
 import { router as apiRouter } from './routes/api';
+import { jwtStrategy } from './utils/jwt';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+passport.use(jwtStrategy);
 app.get('/', (req, res) => res.redirect('/api'));
 app.use('/api', apiRouter);
 
