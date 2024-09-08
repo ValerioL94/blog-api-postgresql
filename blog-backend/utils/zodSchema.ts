@@ -11,10 +11,17 @@ export const UserSchema = z
     email: z
       .string()
       .email()
-      .refine(async (value) => {
-        const user = await prisma.user.findUnique({ where: { email: value } });
-        user ? false : true;
-      }, 'Email already in use'),
+      .refine(
+        async (value) =>
+          (await prisma.user.findUnique({ where: { email: value } })) === null,
+        { message: 'Email already in use' }
+      ),
+    // .refine(async (value) => {
+    //   const user = await prisma.user.findUnique({
+    //     where: { email: value },
+    //   });
+    //   user === null;
+    // }),
     password: z
       .string()
       .regex(
