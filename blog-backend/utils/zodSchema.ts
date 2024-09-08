@@ -6,8 +6,7 @@ export const UserSchema = z
     username: z
       .string()
       .trim()
-      .min(3, 'username must contain at least 3 characters')
-      .max(100, 'username must contain less than 100 characters'),
+      .min(3, 'Username must contain at least 3 characters'),
     email: z
       .string()
       .email()
@@ -16,12 +15,6 @@ export const UserSchema = z
           (await prisma.user.findUnique({ where: { email: value } })) === null,
         { message: 'Email already in use' }
       ),
-    // .refine(async (value) => {
-    //   const user = await prisma.user.findUnique({
-    //     where: { email: value },
-    //   });
-    //   user === null;
-    // }),
     password: z
       .string()
       .regex(
