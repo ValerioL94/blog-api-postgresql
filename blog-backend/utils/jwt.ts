@@ -1,5 +1,5 @@
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
-import { prisma } from '../prisma/client.ts';
+import { prisma } from '../prisma/client';
 
 const JWT_SECRET = process.env.SECRET!;
 

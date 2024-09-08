@@ -2,8 +2,8 @@ import express, { NextFunction, Request, Response } from 'express';
 import createError, { HttpError } from 'http-errors';
 import passport from 'passport';
 import cors from 'cors';
-import { router as apiRouter } from './routes/api.ts';
-import { jwtStrategy } from './utils/jwt.ts';
+import { router as apiRouter } from './routes/api';
+import { jwtStrategy } from './utils/jwt';
 
 const app = express();
 app.use(cors());

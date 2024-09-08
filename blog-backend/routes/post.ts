@@ -1,12 +1,12 @@
 import express from 'express';
-import { router as commentRouter } from './comment.ts';
+import { router as commentRouter } from './comment';
 import {
   post_list,
   post_detail,
   post_create,
   post_update,
   post_delete,
-} from '../controllers/postController.ts';
+} from '../controllers/postController';
 
 export const router = express.Router({ mergeParams: true });
 
