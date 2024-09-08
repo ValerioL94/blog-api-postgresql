@@ -1,6 +1,7 @@
-import { router as apiRouter } from '../routes/api.ts';
+import { router as apiRouter } from '../routes/api';
 import request from 'supertest';
 import express from 'express';
+import { describe, it } from 'vitest';
 
 const app = express();
 
