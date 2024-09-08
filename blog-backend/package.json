@@ -5,8 +5,8 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "test": "vitest run --pool=forks",
-    "dev": "tsx --watch --env-file=.env app.ts",
+    "test": "NODE_ENV=test && vitest run --pool=forks",
+    "dev": "NODE_ENV=development && tsx --watch --env-file=.env app.ts",
     "build": "tsc",
     "start": "node dist/app.js",
     "kill": "kill -9 $(lsof -t -i:3000)"
