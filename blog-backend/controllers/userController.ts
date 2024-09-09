@@ -4,23 +4,24 @@ import { UserSchema } from '../utils/zodSchema';
 import bcrypt from 'bcryptjs';
 import { prisma } from '../prisma/client';
 import jwt from 'jsonwebtoken';
+import { ISignupRequest, TLoginBody } from '../types/types';
 
 export const user_sign_up = asyncHandler(async (req, res, next) => {
-  const { body } = req;
+  const { body }: ISignupRequest = req;
   const results = await UserSchema.safeParseAsync(body);
   if (!results.success) {
     const errors = fromZodError(results.error).details;
     res.json({ errors: errors });
   } else {
-    const data = results.data;
-    bcrypt.hash(data.password, 10, async (err, hashedPassword) => {
+    const parsedData = results.data;
+    bcrypt.hash(parsedData.password, 10, async (err, hashedPassword) => {
       if (err) {
         return next(err);
       } else {
         await prisma.user.create({
           data: {
-            username: data.username,
-            email: data.email,
+            username: parsedData.username,
+            email: parsedData.email,
             password: hashedPassword,
           },
         });
@@ -31,7 +32,7 @@ export const user_sign_up = asyncHandler(async (req, res, next) => {
 });
 
 export const user_log_in = asyncHandler(async (req, res, next) => {
-  const { email, password } = req.body;
+  const { email, password }: TLoginBody = req.body;
   const user = await prisma.user.findUnique({ where: { email: email } });
   if (!user) {
     res.json({ errors: 'Email not found' });
@@ -40,10 +41,10 @@ export const user_log_in = asyncHandler(async (req, res, next) => {
     if (!match) {
       res.json({ errors: 'Wrong password' });
     } else {
-      const JWT_SECRET = process.env.SECRET!;
-      const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: 600 });
+      const JWT_SECRET = process.env.SECRET || 'randomSecret';
+      const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: 600 });
       res.json({
-        token: token,
+        token,
         user: {
           id: user.id,
           username: user.username,
