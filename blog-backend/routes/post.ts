@@ -7,15 +7,19 @@ import {
   post_update,
   post_delete,
 } from '../controllers/postController';
+// import passport from 'passport';
 
 export const router = express.Router({ mergeParams: true });
 
-router.get('/', post_list);
-router
-  .route('/:postId')
-  .get(post_detail)
-  .post(post_create)
-  .put(post_update)
-  .delete(post_delete);
+router.route('/').get(post_list).post(post_create);
+router.route('/:postId').get(post_detail).put(post_update).delete(post_delete);
 
 router.use('/comments', commentRouter);
+
+// router.get(
+//   '/authOnly',
+//   passport.authenticate('jwt', { session: false }),
+//   function (req, res) {
+//     res.json({ message: 'You are correctly logged in.' });
+//   }
+// );
