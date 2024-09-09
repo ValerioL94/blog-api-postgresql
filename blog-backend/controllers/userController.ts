@@ -11,7 +11,7 @@ export const user_sign_up = asyncHandler(async (req, res, next) => {
   const results = await UserSchema.safeParseAsync(body);
   if (!results.success) {
     const errors = fromZodError(results.error).details;
-    res.json({ errors: errors });
+    res.json({ errors });
   } else {
     const parsedData = results.data;
     bcrypt.hash(parsedData.password, 10, async (err, hashedPassword) => {
