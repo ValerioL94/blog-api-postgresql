@@ -20,3 +20,14 @@ export interface ISignupRequest extends Request {
 export type Payload = {
   id: string;
 };
+
+export type TPostBody = {
+  title: string;
+  content: string;
+  published: string;
+  authorId: string;
+};
+
+export interface IPostRequest extends Request {
+  body: TPostBody;
+}
