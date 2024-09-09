@@ -14,10 +14,8 @@ describe('GET /api', () => {
       .get('/')
       .expect('Content-Type', /json/)
       .expect(200);
-
-    expect(res.body.message).toBe(
+    expect(res.body.message).toEqual(
       'From /api you can get to the following paths: /users , /posts , /posts/comments'
     );
-    // console.log(res.body.message);
   });
 });
