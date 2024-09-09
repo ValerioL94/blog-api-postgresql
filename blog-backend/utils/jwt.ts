@@ -1,40 +1,29 @@
-import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
+import {
+  Strategy as JwtStrategy,
+  ExtractJwt,
+  VerifiedCallback,
+} from 'passport-jwt';
 import { prisma } from '../prisma/client';
+import { Payload } from '../types/types';
 
-const JWT_SECRET = process.env.SECRET!;
+const JWT_SECRET = process.env.SECRET || 'randomSecret';
 
-export const jwtStrategy = new JwtStrategy(
-  {
-    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: JWT_SECRET,
-  },
-  async function (jwt_payload, done) {
-    try {
-      const user = await prisma.user.findUnique({
-        where: { email: jwt_payload.email },
-      });
+const opts = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: JWT_SECRET,
+};
+function verify(jwt_payload: Payload, done: VerifiedCallback) {
+  prisma.user
+    .findUnique({ where: { id: jwt_payload.id } })
+    .then((user) => {
       if (user) {
-        return done(null, user);
+        return done(null, true);
       } else {
         return done(null, false);
       }
-    } catch (error) {
+    })
+    .catch((error) => {
       return done(error, false);
-    }
-  }
-
-  //   function (jwt_payload, done) {
-  //     prisma.user
-  //       .findUnique({ where: { email: jwt_payload.email } })
-  //       .then((user) => {
-  //         if (user) {
-  //           return done(null, true);
-  //         } else {
-  //           return done(null, false);
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         return done(error, false);
-  //       });
-  //   }
-);
+    });
+}
+export const jwtStrategy: JwtStrategy = new JwtStrategy(opts, verify);
