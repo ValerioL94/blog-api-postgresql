@@ -27,3 +27,19 @@ export const UserSchema = z
     message: "Passwords don't match",
     path: ['confirm'],
   });
+
+export const PostSchema = z.object({
+  title: z.string().trim().min(3, 'Title must contain at least 3 characters'),
+  content: z
+    .string()
+    .trim()
+    .min(100, 'Content must contain at least 50 characters')
+    .max(10000, 'Content must contain no more than 10000 characters'),
+  published: z
+    .string()
+    .refine((value) => value === 'true' || value === 'false', {
+      message: 'Value must be a boolean',
+    })
+    .transform((value) => value === 'true'),
+  authorId: z.string(),
+});
