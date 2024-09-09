@@ -3,6 +3,7 @@ import request from 'supertest';
 import express from 'express';
 import { describe, it, expect, afterAll } from 'vitest';
 import { prisma } from '../prisma/client';
+import { TLoginBody, TSignupBody } from '../types/types';
 
 const app = express();
 
@@ -10,13 +11,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use('/', userRouter);
 
-const testPayload = {
+const testPayload: TSignupBody = {
   username: 'testUser',
   email: 'test@gmail.com',
   password: 'Test1234@',
   confirm: 'Test1234@',
 };
-const testUser = {
+const testUser: TLoginBody = {
   email: 'test@gmail.com',
   password: 'Test1234@',
 };
@@ -90,7 +91,8 @@ describe('user router test', () => {
         .send(testUser)
         .expect('Content-Type', /json/)
         .expect(200);
-      expect(res.body.token && res.body.user).toBeDefined();
+      expect(res.body.token).toBeDefined();
+      expect(res.body.user).toBeDefined();
     });
   });
   describe('POST /login fail', () => {
