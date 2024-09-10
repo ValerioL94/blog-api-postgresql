@@ -22,7 +22,7 @@ const testUser: TLoginBody = {
   password: 'Test1234@',
 };
 
-describe('user router test', () => {
+describe('user router tests', () => {
   afterAll(async () => {
     await prisma.user.delete({ where: { email: testPayload.email } });
   });
