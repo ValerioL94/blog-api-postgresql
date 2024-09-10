@@ -31,3 +31,9 @@ export type TPostBody = {
 export interface IPostRequest extends Request {
   body: TPostBody;
 }
+
+export type TUpdateBody = Omit<TPostBody, 'authorId'>;
+
+export interface IUpdateRequest extends Request {
+  body: TUpdateBody;
+}
