@@ -1,7 +1,7 @@
 import asyncHandler from 'express-async-handler';
 import { prisma } from '../prisma/client';
-import { IPostRequest } from '../types/types';
-import { PostSchema } from '../utils/zodSchema';
+import { IPostRequest, IUpdateRequest } from '../types/types';
+import { PostSchemaPost, PostSchemaUpdate } from '../utils/zodSchema';
 import { fromZodError } from 'zod-validation-error';
 
 export const post_list = asyncHandler(async (req, res, next) => {
@@ -14,14 +14,14 @@ export const post_list = asyncHandler(async (req, res, next) => {
 
 export const post_create = asyncHandler(async (req, res, next) => {
   const { body }: IPostRequest = req;
-  const results = await PostSchema.safeParseAsync(body);
+  const results = await PostSchemaPost.safeParseAsync(body);
   if (!results.success) {
     const errors = fromZodError(results.error).details;
     res.json({ errors });
   } else {
     const parsedData = results.data;
-    await prisma.post.create({ data: parsedData });
-    res.json({ message: 'Post created successfully' });
+    const post = await prisma.post.create({ data: parsedData });
+    res.json({ post, message: 'Post created successfully' });
   }
 });
 
@@ -37,8 +37,8 @@ export const post_detail = asyncHandler(async (req, res, next) => {
 });
 
 export const post_update = asyncHandler(async (req, res, next) => {
-  const { body }: IPostRequest = req;
-  const results = await PostSchema.safeParseAsync(body);
+  const { body }: IUpdateRequest = req;
+  const results = await PostSchemaUpdate.safeParseAsync(body);
   if (!results.success) {
     const errors = fromZodError(results.error).details;
     res.json({ errors });
@@ -46,7 +46,11 @@ export const post_update = asyncHandler(async (req, res, next) => {
     const parsedData = results.data;
     await prisma.post.update({
       where: { id: req.params.postId },
-      data: { ...parsedData, id: req.params.postId },
+      data: {
+        title: parsedData.title,
+        content: parsedData.content,
+        published: parsedData.published,
+      },
     });
     res.json({ message: 'Post updated successfully' });
   }
