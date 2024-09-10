@@ -28,7 +28,7 @@ export const UserSchema = z
     path: ['confirm'],
   });
 
-export const PostSchema = z.object({
+export const PostSchemaPost = z.object({
   title: z.string().trim().min(3, 'Title must contain at least 3 characters'),
   content: z
     .string()
@@ -43,3 +43,4 @@ export const PostSchema = z.object({
     .transform((value) => value === 'true'),
   authorId: z.string(),
 });
+export const PostSchemaUpdate = PostSchemaPost.omit({ authorId: true });
