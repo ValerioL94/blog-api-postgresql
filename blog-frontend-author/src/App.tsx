@@ -1,9 +1,25 @@
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  redirect,
+  Route,
+  RouterProvider,
+} from 'react-router-dom';
+import MainLayout from './components/MainLayout';
+import HomePage from './pages/HomePage';
+
 function App() {
-  return (
-    <div className='flex items-center justify-center'>
-      <h1 className='font-semibold text-green-700'>Hello World</h1>
-    </div>
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <>
+        <Route path='/' element={<MainLayout />}>
+          <Route index loader={async () => redirect('home')} />
+          <Route path='home' element={<HomePage />} />
+        </Route>
+      </>
+    )
   );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
