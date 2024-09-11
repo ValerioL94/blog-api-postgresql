@@ -3,7 +3,7 @@ import request from 'supertest';
 import express from 'express';
 import { describe, it, expect, beforeAll } from 'vitest';
 import { prisma } from '../prisma/client';
-import { TPostBody, TSignupBody } from '../types/types';
+import { TPostCreateBody, TSignupBody } from '../types/types';
 import jwt from 'jsonwebtoken';
 import passport from 'passport';
 import { jwtStrategy } from '../utils/jwt';
@@ -21,7 +21,7 @@ const userPayload: Omit<TSignupBody, 'confirm'> = {
   password: 'Test1234@',
 };
 
-const postPayload: TPostBody = {
+const postPayload: TPostCreateBody = {
   title: 'testPost',
   content:
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vehicula gravida nibh, sit amet feugiat ipsum scelerisque sit amet. Nunc tortor ipsum, sollicitudin at eros vitae, fermentum porta mauris. Nam consectetur malesuada luctus. Vivamus posuere massa sed magna condimentum malesuada. Maecenas vel tincidunt turpis. Maecenas porta sodales turpis at viverra. Phasellus volutpat ipsum in lectus suscipit, non efficitur orci interdum. Morbi egestas nisi fermentum sapien vulputate rhoncus. Fusce blandit et enim a vestibulum. Phasellus lacinia malesuada elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel fringilla purus. Nullam hendrerit augue vel sodales interdum. Maecenas eget augue pellentesque, euismod nisi in, dignissim justo. Phasellus.',
