@@ -112,11 +112,7 @@ describe('post router tests', () => {
       const res = await request(app)
         .put(`/${testPostId}`)
         .set('Authorization', 'Bearer ' + token)
-        .send({
-          title: 'editedTitle',
-          content: postPayload.content,
-          published: 'false',
-        })
+        .send({ ...postPayload, title: 'edited title' })
         .expect('Content-Type', /json/)
         .expect(200);
       expect(res.body.message).toEqual('Post updated successfully');
@@ -126,22 +122,14 @@ describe('post router tests', () => {
     it('should respond with 401 unauthorized', async () => {
       await request(app)
         .put(`/${testPostId}`)
-        .send({
-          title: 'editedTitle',
-          content: postPayload.content,
-          published: 'false',
-        })
+        .send({ ...postPayload, title: 'edited title' })
         .expect(401);
     });
     it('should respond with title error message', async () => {
       const res = await request(app)
         .put(`/${testPostId}`)
         .set('Authorization', 'Bearer ' + token)
-        .send({
-          title: '',
-          content: postPayload.content,
-          published: 'false',
-        })
+        .send({ ...postPayload, title: '' })
         .expect('Content-Type', /json/)
         .expect(200);
       expect(res.body.errors[0].message).toEqual(
@@ -152,11 +140,7 @@ describe('post router tests', () => {
       const res = await request(app)
         .put(`/${testPostId}`)
         .set('Authorization', 'Bearer ' + token)
-        .send({
-          title: 'editedTitle',
-          content: '',
-          published: 'false',
-        })
+        .send({ ...postPayload, content: '' })
         .expect('Content-Type', /json/)
         .expect(200);
       expect(res.body.errors[0].message).toEqual(
