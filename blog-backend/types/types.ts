@@ -35,7 +35,7 @@ export interface IPostUpdateRequest extends Request {
 }
 
 export type TCommentBody = {
-  title: string;
+  username: string;
   content: string;
 };
 
