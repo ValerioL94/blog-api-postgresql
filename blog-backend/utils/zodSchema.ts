@@ -44,3 +44,14 @@ export const PostSchemaPost = z.object({
   authorId: z.string(),
 });
 export const PostSchemaUpdate = PostSchemaPost.omit({ authorId: true });
+
+export const CommentSchema = z.object({
+  username: z
+    .string()
+    .trim()
+    .min(3, 'Username must contain at least 3 characters'),
+  content: z
+    .string()
+    .trim()
+    .min(10, 'Content must contain at least 10 characters'),
+});
