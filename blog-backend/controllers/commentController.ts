@@ -15,8 +15,8 @@ export const comment_create = asyncHandler(async (req, res, next) => {
     const comment = await prisma.comment.create({
       data: { ...parsedData, postId: req.params.postId },
     });
+    res.json({ comment, message: 'Comment created successfully' });
   }
-  res.json({ message: 'Comment created successfully' });
 });
 
 export const comment_update = asyncHandler(async (req, res, next) => {
