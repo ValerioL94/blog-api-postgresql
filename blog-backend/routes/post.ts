@@ -21,12 +21,4 @@ router
   .put(passport.authenticate('jwt', { session: false }), post_update)
   .delete(passport.authenticate('jwt', { session: false }), post_delete);
 
-router.use('/comments', commentRouter);
-
-// router.get(
-//   '/authOnly',
-//   passport.authenticate('jwt', { session: false }),
-//   function (req, res) {
-//     res.json({ message: 'You are correctly logged in.' });
-//   }
-// );
+router.use('/:postId/comments', commentRouter);
