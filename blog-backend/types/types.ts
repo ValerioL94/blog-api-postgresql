@@ -17,23 +17,28 @@ export interface ISignupRequest extends Request {
   body: TSignupBody;
 }
 
-export type Payload = {
-  id: string;
-};
-
-export type TPostBody = {
+export type TPostCreateBody = {
   title: string;
   content: string;
   published: string;
   authorId: string;
 };
 
-export interface IPostRequest extends Request {
-  body: TPostBody;
+export interface IPostCreateRequest extends Request {
+  body: TPostCreateBody;
 }
 
-export type TUpdateBody = Omit<TPostBody, 'authorId'>;
+export type TPostUpdateBody = Omit<TPostCreateBody, 'authorId'>;
 
-export interface IUpdateRequest extends Request {
-  body: TUpdateBody;
+export interface IPostUpdateRequest extends Request {
+  body: TPostUpdateBody;
+}
+
+export type TCommentBody = {
+  title: string;
+  content: string;
+};
+
+export interface ICommentUpsertRequest extends Request {
+  body: TCommentBody;
 }
