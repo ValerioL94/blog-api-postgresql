@@ -4,8 +4,8 @@ const HomePage = () => {
   const { token } = useAuth();
 
   return (
-    <div className='wrapper'>
-      <h1>Homepage</h1>
+    <div className='flex flex-col p-1 w-full max-w-3xl rounded shadow-md shadow-gray-500'>
+      <h1 className='text-center text-green-700 font-bold text-xl'>Homepage</h1>
       {token ? (
         <>
           <p>
