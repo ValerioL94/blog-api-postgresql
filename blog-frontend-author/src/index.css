@@ -6,8 +6,16 @@
   html,
   body {
     height: 100%;
-    margin: 0;
     font-size: 18px;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    a {
+      text-decoration-line: none;
+      color: rgb(21 128 61);
+    }
+    a:hover,
+    a:focus {
+      outline: none;
+      text-decoration-line: underline;
+    }
   }
 }
