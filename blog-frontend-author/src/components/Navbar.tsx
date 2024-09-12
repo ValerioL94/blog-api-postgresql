@@ -4,8 +4,8 @@ const Navbar = () => {
   const { token } = useAuth();
   const linkClass = ({ isActive }: { isActive: boolean }): string =>
     isActive
-      ? 'text-green-800 bg-white border-2 border-solid border-green-700 rounded-lg p-1 hover:border-lime-400 focus:border-lime-400 focus:outline-none animate-bounce hover:no-underline'
-      : 'text-white border-2 border-solid border-green-700 rounded-lg p-1 hover:border-lime-400 focus:border-lime-400 focus:outline-none hover:no-underline';
+      ? 'text-green-800 bg-white border-2 border-solid border-green-700 rounded-lg p-1 hover:border-lime-400 focus:border-lime-400 hover:no-underline focus:no-underline focus:outline-none'
+      : 'text-white border-2 border-solid border-green-700 rounded-lg p-1 hover:border-lime-400 focus:border-lime-400 hover:no-underline focus:no-underline focus:outline-none ';
 
   return (
     <nav className='w-full max-w-3xl'>
