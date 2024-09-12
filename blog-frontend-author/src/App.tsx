@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import MainLayout from './components/MainLayout';
 import HomePage from './pages/HomePage';
+import About from './pages/About';
 
 function App() {
   const router = createBrowserRouter(
@@ -15,6 +16,7 @@ function App() {
         <Route path='/' element={<MainLayout />}>
           <Route index loader={async () => redirect('home')} />
           <Route path='home' element={<HomePage />} />
+          <Route path='about' element={<About />} />
         </Route>
       </>
     )
