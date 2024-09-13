@@ -1,37 +1,40 @@
 import { useEffect, useMemo, useState } from 'react';
 import { AuthContext } from './context';
-
-const checkTokenValidity = (token: string) => {
-  if (!token) return false;
-  const expirationTime = JSON.parse(atob(token.split('.')[1])).exp * 1000;
-  return Date.now() < expirationTime;
-};
+import { TAuthData } from '../types/types';
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [token, setToken] = useState<string | null>(
-    localStorage.getItem('token') ? localStorage.getItem('token') : null
-  );
+  const localData = localStorage.getItem('authData');
+  const defaultData: TAuthData = localData ? JSON.parse(localData) : null;
+  const [authData, setAuthData] = useState<TAuthData>(defaultData);
+
   function handleExpiredToken() {
-    localStorage.removeItem('token');
-    setToken(null);
+    localStorage.clear();
+    setAuthData(null);
   }
+  const checkTokenValidity = (token: string) => {
+    if (!token) return false;
+    const expirationTime = JSON.parse(atob(token.split('.')[1])).exp * 1000;
+    return Date.now() < expirationTime;
+  };
+
   useEffect(() => {
-    if (token && checkTokenValidity(token)) {
-      localStorage.setItem('token', JSON.stringify(token));
-      const expirationTime = JSON.parse(atob(token.split('.')[1])).exp * 1000;
+    if (authData && checkTokenValidity(authData.token)) {
+      localStorage.setItem('authData', JSON.stringify(authData));
+      const expirationTime =
+        JSON.parse(atob(authData.token.split('.')[1])).exp * 1000;
       const timeUntilExpiration = expirationTime - Date.now();
       setTimeout(handleExpiredToken, timeUntilExpiration);
     } else {
       handleExpiredToken();
     }
-  }, [token]);
+  }, [authData]);
 
   const contextValue = useMemo(
     () => ({
-      token,
-      setToken,
+      authData,
+      setAuthData,
     }),
-    [token]
+    [authData]
   );
 
   return (
