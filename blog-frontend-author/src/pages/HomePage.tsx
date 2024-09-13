@@ -1,15 +1,15 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../provider/context';
 const HomePage = () => {
-  const { token } = useAuth();
+  const { authData } = useAuth();
 
   return (
-    <div className='flex flex-col p-1 w-full max-w-3xl rounded shadow-md shadow-gray-500'>
+    <div className='flex flex-col gap-2 p-4 w-full max-w-3xl rounded bg-white shadow-md shadow-gray-500'>
       <h1 className='text-center text-green-700 font-bold text-xl'>Homepage</h1>
-      {token ? (
+      {authData ? (
         <>
           <p>
-            Welcome back <strong>{'placeholder'}</strong> !
+            Welcome back <strong>{authData.user.username}</strong> !
           </p>
           <p>
             Here to make a new <Link to={'/posts'}>post</Link> ? Or just
