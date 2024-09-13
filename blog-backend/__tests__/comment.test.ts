@@ -3,11 +3,12 @@ import request from 'supertest';
 import express from 'express';
 import { describe, it, expect, beforeAll } from 'vitest';
 import { prisma } from '../prisma/client';
-
 import jwt from 'jsonwebtoken';
 import passport from 'passport';
 import { jwtStrategy } from '../utils/jwt';
 import { TCommentBody, TSignupBody } from '../types/types';
+
+const author_key = process.env.AUTHOR_KEY;
 
 const app = express();
 
@@ -20,6 +21,7 @@ const userPayload: Omit<TSignupBody, 'confirm'> = {
   username: 'testUser',
   email: 'testUser@gmail.com',
   password: 'Test1234@',
+  authorKey: author_key || 'IAmACertifiedAuthor',
 };
 
 const postPayload: { title: string; content: string; published: boolean } = {
@@ -36,8 +38,6 @@ const commentPayload: TCommentBody = {
 
 describe('comment router tests', () => {
   let token: string;
-  let testUserId: string;
-  let testPostId: string;
   let testCommentId: string;
   beforeAll(async () => {
     const user = await prisma.user.findUnique({
@@ -57,8 +57,6 @@ describe('comment router tests', () => {
     if (user) {
       const JWT_SECRET = process.env.SECRET || 'randomSecret';
       token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: 600 });
-      testUserId = user.id;
-      testPostId = user.posts[0].id;
     }
   });
   describe('POST / success', () => {

@@ -8,6 +8,8 @@ import jwt from 'jsonwebtoken';
 import passport from 'passport';
 import { jwtStrategy } from '../utils/jwt';
 
+const author_key = process.env.AUTHOR_KEY;
+
 const app = express();
 
 app.use(express.urlencoded({ extended: false }));
@@ -19,6 +21,7 @@ const userPayload: Omit<TSignupBody, 'confirm'> = {
   username: 'testUser',
   email: 'testUser@gmail.com',
   password: 'Test1234@',
+  authorKey: author_key || 'IAmACertifiedAuthor',
 };
 
 const postPayload: TPostCreateBody = {

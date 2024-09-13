@@ -11,11 +11,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use('/', userRouter);
 
+const author_key = process.env.AUTHOR_KEY;
 const testPayload: TSignupBody = {
   username: 'testUser',
   email: 'test@gmail.com',
   password: 'Test1234@',
   confirm: 'Test1234@',
+  authorKey: author_key || 'IAmACertifiedAuthor',
 };
 const testUser: TLoginBody = {
   email: 'test@gmail.com',
@@ -36,52 +38,60 @@ describe('user router tests', () => {
       expect(res.body.errors).toBeUndefined();
       expect(res.body.message).toEqual('Sign-up successful');
     });
-    describe('POST /signup fail', () => {
-      it('should respond with username error message', async () => {
-        const res = await request(app)
-          .post('/signup')
-          .send({ ...testPayload, username: '' })
-          .expect('Content-Type', /json/)
-          .expect(200);
-        expect(res.body.errors[0].message).toEqual(
-          'Username must contain at least 3 characters'
-        );
-      });
-      it('should respond with invalid email error message', async () => {
-        const res = await request(app)
-          .post('/signup')
-          .send({ ...testPayload, email: '' })
-          .expect('Content-Type', /json/)
-          .expect(200);
-        expect(res.body.errors[0].message).toEqual('Invalid email');
-      });
-      it('should respond with email in use error message', async () => {
-        const res = await request(app)
-          .post('/signup')
-          .send({ ...testPayload })
-          .expect('Content-Type', /json/)
-          .expect(200);
+  });
+  describe('POST /signup fail', () => {
+    it('should respond with username error message', async () => {
+      const res = await request(app)
+        .post('/signup')
+        .send({ ...testPayload, email: 'test2@gmail.com', username: '' })
+        .expect('Content-Type', /json/)
+        .expect(200);
+      expect(res.body.errors[0].message).toEqual(
+        'Username must contain at least 3 characters'
+      );
+    });
+    it('should respond with invalid email error message', async () => {
+      const res = await request(app)
+        .post('/signup')
+        .send({ ...testPayload, email: '' })
+        .expect('Content-Type', /json/)
+        .expect(200);
+      expect(res.body.errors[0].message).toEqual('Invalid email');
+    });
+    it('should respond with email in use error message', async () => {
+      const res = await request(app)
+        .post('/signup')
+        .send({ ...testPayload })
+        .expect('Content-Type', /json/)
+        .expect(200);
 
-        expect(res.body.errors[0].message).toEqual('Email already in use');
-      });
-      it('should respond with password error message', async () => {
-        const res = await request(app)
-          .post('/signup')
-          .send({ ...testPayload, password: '' })
-          .expect('Content-Type', /json/)
-          .expect(200);
-        expect(res.body.errors[0].message).toEqual(
-          'Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter and 1 number'
-        );
-      });
-      it('should respond with password mismatch error message', async () => {
-        const res = await request(app)
-          .post('/signup')
-          .send({ ...testPayload, email: 'test2@gmail.com', confirm: '' })
-          .expect('Content-Type', /json/)
-          .expect(200);
-        expect(res.body.errors[0].message).toEqual("Passwords don't match");
-      });
+      expect(res.body.errors[0].message).toEqual('Email already in use');
+    });
+    it('should respond with password error message', async () => {
+      const res = await request(app)
+        .post('/signup')
+        .send({ ...testPayload, email: 'test2@gmail.com', password: '' })
+        .expect('Content-Type', /json/)
+        .expect(200);
+      expect(res.body.errors[0].message).toEqual(
+        'Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter and 1 number'
+      );
+    });
+    it('should respond with password mismatch error message', async () => {
+      const res = await request(app)
+        .post('/signup')
+        .send({ ...testPayload, email: 'test2@gmail.com', confirm: '' })
+        .expect('Content-Type', /json/)
+        .expect(200);
+      expect(res.body.errors[0].message).toEqual("Passwords don't match");
+    });
+    it('should respond with author key error message', async () => {
+      const res = await request(app)
+        .post('/signup')
+        .send({ ...testPayload, email: 'test2@gmail.com', authorKey: '' })
+        .expect('Content-Type', /json/)
+        .expect(200);
+      expect(res.body.errors[0].message).toEqual('Invalid author key');
     });
   });
   describe('POST /login success', () => {
