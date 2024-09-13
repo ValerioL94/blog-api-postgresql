@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../provider/context';
 const Navbar = () => {
-  const { token } = useAuth();
+  const { authData } = useAuth();
   const linkClass = ({ isActive }: { isActive: boolean }): string =>
     isActive
       ? 'text-green-800 bg-white border-2 border-solid border-green-700 rounded-lg p-1 hover:border-lime-400 focus:border-lime-400 hover:no-underline focus:no-underline focus:outline-none'
@@ -15,7 +15,7 @@ const Navbar = () => {
             Home
           </NavLink>
         </li>
-        {token ? (
+        {authData ? (
           <>
             <li>
               <NavLink to={'posts'} className={linkClass}>
