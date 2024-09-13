@@ -1,12 +1,11 @@
 import { createContext, useContext } from 'react';
-import { TokenContext } from '../types/types';
+import { TAuthContext } from '../types/types';
 
-const defaultContext: TokenContext = {
-  token: null,
-  setToken: () => null,
+const defaultContext: TAuthContext = {
+  authData: null,
+  setAuthData: () => null,
 };
 const AuthContext = createContext(defaultContext);
-
 const useAuth = () => {
   return useContext(AuthContext);
 };
