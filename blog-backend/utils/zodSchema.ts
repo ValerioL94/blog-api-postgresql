@@ -28,7 +28,7 @@ export const UserSchema = z
     authorKey: z
       .string()
       .trim()
-      .refine((value) => value === author_key, 'Invalid key'),
+      .refine((value) => value === author_key, 'Invalid author key'),
   })
   .refine((data) => data.password === data.confirm, {
     message: "Passwords don't match",
