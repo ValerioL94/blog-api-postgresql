@@ -5,6 +5,7 @@ export type TSignupBody = {
   email: string;
   password: string;
   confirm: string;
+  authorKey: string;
 };
 
 export type TLoginBody = Pick<TSignupBody, 'email' | 'password'>;

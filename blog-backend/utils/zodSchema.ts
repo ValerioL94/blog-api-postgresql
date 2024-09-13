@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { prisma } from '../prisma/client';
 
+const author_key = process.env.AUTHOR_KEY;
 export const UserSchema = z
   .object({
     username: z
@@ -9,6 +10,7 @@ export const UserSchema = z
       .min(3, 'Username must contain at least 3 characters'),
     email: z
       .string()
+      .trim()
       .email()
       .refine(
         async (value) =>
@@ -17,11 +19,16 @@ export const UserSchema = z
       ),
     password: z
       .string()
+      .trim()
       .regex(
         /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
         'Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter and 1 number'
       ),
-    confirm: z.string(),
+    confirm: z.string().trim(),
+    authorKey: z
+      .string()
+      .trim()
+      .refine((value) => value === author_key, 'Invalid key'),
   })
   .refine((data) => data.password === data.confirm, {
     message: "Passwords don't match",
