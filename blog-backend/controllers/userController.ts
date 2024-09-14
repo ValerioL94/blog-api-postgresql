@@ -35,11 +35,11 @@ export const user_log_in = asyncHandler(async (req, res, next) => {
   const { email, password }: TLoginBody = req.body;
   const user = await prisma.user.findUnique({ where: { email: email } });
   if (!user) {
-    res.json({ errors: 'Email not found' });
+    res.json({ errors: [{ message: 'Email not found' }] });
   } else {
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
-      res.json({ errors: 'Wrong password' });
+      res.json({ errors: [{ message: 'Wrong password' }] });
     } else {
       const JWT_SECRET = process.env.SECRET || 'randomSecret';
       const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: 600 });
