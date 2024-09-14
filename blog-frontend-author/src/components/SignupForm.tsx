@@ -1,25 +1,33 @@
-import { useReducer, useState } from 'react';
-import { Form } from 'react-router-dom';
-import signupReducer from '../reducers/signupFormReducer';
+import { useEffect, useReducer, useState } from 'react';
+import { Form, useActionData, useNavigate } from 'react-router-dom';
+import { initialFormState, signupReducer } from '../reducers/signupFormReducer';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { TSignupForm } from '../types/types';
-
-const initialFormState: TSignupForm = {
-  username: '',
-  email: '',
-  password: '',
-  confirm: '',
-  authorKey: '',
-  showPassword: false,
-  showConfirm: false,
-  showAuthorKey: false,
-};
+import { toast } from 'react-toastify';
+import ErrorList from './ErrorList';
 
 const SignupForm = () => {
   const [formState, dispatch] = useReducer(signupReducer, initialFormState);
-  const [errors, setErrors] = useState<string[] | null>(null);
-  // const response = useActionData()
-  // const navigate = useNavigate()
+  const [errors, setErrors] = useState(null);
+  const response = useActionData();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (response && response.errors) {
+      setErrors(response.errors);
+    }
+    if (response && !response.errors) {
+      dispatch({
+        type: 'RESET FORM',
+        field: '',
+        payload: '',
+      });
+      setErrors(null);
+      toast.success('Signup successful!', { autoClose: 3000 });
+      setTimeout(() => {
+        navigate('/login', { replace: true });
+      }, 3000);
+    }
+  }, [response, navigate]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
@@ -31,6 +39,8 @@ const SignupForm = () => {
   const handleInputShow = (type: string) => {
     dispatch({
       type,
+      field: '',
+      payload: '',
     });
   };
   return (
@@ -141,7 +151,7 @@ const SignupForm = () => {
           )}
         </div>
         <input
-          className='block w-full py-1 px-2 mb-3 border-2 border-solid border-gray-500 rounded-md text-sm hover:border-green-600 focus:border-green-700 outline-none  '
+          className='block w-full py-1 px-2 mb-3 border-2 border-solid border-gray-500 rounded-md text-sm hover:border-green-600 focus:border-green-700 outline-none'
           type={formState.showAuthorKey ? 'text' : 'password'}
           name='authorKey'
           id='authorKey'
@@ -156,17 +166,7 @@ const SignupForm = () => {
           Submit
         </button>
       </Form>
-      {errors ? (
-        <ul>
-          {errors.map((error, index) => (
-            <li className='errors-list' key={index}>
-              {error}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        ''
-      )}
+      {errors ? <ErrorList errors={errors} /> : ''}
     </>
   );
 };
