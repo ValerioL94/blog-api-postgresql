@@ -27,6 +27,6 @@ export type TSignupForm = {
 
 export type SignupReducerAction = {
   type: string;
-  field?: string;
-  payload?: string;
+  field: string;
+  payload: string;
 };
