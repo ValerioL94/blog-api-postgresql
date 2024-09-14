@@ -2,8 +2,9 @@ import { useReducer, useState } from 'react';
 import { Form } from 'react-router-dom';
 import signupReducer from '../reducers/signupFormReducer';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { TSignupForm } from '../types/types';
 
-const initialFormState = {
+const initialFormState: TSignupForm = {
   username: '',
   email: '',
   password: '',
@@ -20,14 +21,14 @@ const SignupForm = () => {
   // const response = useActionData()
   // const navigate = useNavigate()
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
       type: 'HANDLE INPUT TEXT',
       field: e.target.name,
       payload: e.target.value,
     });
   };
-  const handleInputShow = (type) => {
+  const handleInputShow = (type: string) => {
     dispatch({
       type,
     });
