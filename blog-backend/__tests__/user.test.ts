@@ -113,7 +113,7 @@ describe('user router tests', () => {
         .expect('Content-Type', /json/)
         .expect(200);
 
-      expect(res.body.errors).toEqual('Email not found');
+      expect(res.body.errors[0].message).toEqual('Email not found');
     });
     it('should return wrong password error message if email is correct', async () => {
       const res = await request(app)
@@ -122,7 +122,7 @@ describe('user router tests', () => {
         .expect('Content-Type', /json/)
         .expect(200);
 
-      expect(res.body.errors).toEqual('Wrong password');
+      expect(res.body.errors[0].message).toEqual('Wrong password');
     });
   });
 });
