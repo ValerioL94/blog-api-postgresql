@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-// import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './Navbar';
 const MainLayout = () => {
@@ -10,6 +10,7 @@ const MainLayout = () => {
       </header>
       <main className='flex flex-col items-center h-full bg-green-50 p-4 box-border'>
         <Outlet />
+        <ToastContainer />
       </main>
       <footer className='w-full flex items-center justify-center gap-2 border-t-2 border-gray-500 bg-green-700 font text-white'>
         <p>Copyright © 2024 ValerioL94</p>
@@ -24,7 +25,6 @@ const MainLayout = () => {
           />
         </a>
       </footer>
-      {/* <ToastContainer /> */}
     </>
   );
 };
