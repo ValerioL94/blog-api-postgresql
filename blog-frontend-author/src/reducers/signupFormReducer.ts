@@ -1,9 +1,11 @@
-const signupReducer = (state, action) => {
+import { SignupReducerAction, TSignupForm } from '../types/types';
+
+const signupReducer = (state: TSignupForm, action: SignupReducerAction) => {
   switch (action.type) {
     case 'HANDLE INPUT TEXT':
       return {
         ...state,
-        [action.field]: action.payload,
+        [action.field!]: action.payload,
       };
     case 'HANDLE SHOW PASSWORD':
       return { ...state, showPassword: !state.showPassword };
