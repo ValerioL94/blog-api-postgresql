@@ -4,26 +4,29 @@ import { initialFormState, signupReducer } from '../reducers/signupFormReducer';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import ErrorList from './ErrorList';
+import { TValidationErrors } from '../types/types';
 
 const SignupForm = () => {
   const [formState, dispatch] = useReducer(signupReducer, initialFormState);
-  const [errors, setErrors] = useState(null);
+  const [formErrors, setFormErrors] = useState<TValidationErrors | null>(null);
   const response = useActionData();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (response && response.errors) {
-      setErrors(response.errors);
-    }
-    if (response && !response.errors) {
-      dispatch({
-        type: 'RESET FORM',
-        field: '',
-        payload: '',
-      });
-      setErrors(null);
-      toast.success('Signup successful!', { autoClose: 2000 });
-      navigate('/login', { replace: true });
+    if (response) {
+      const { errors } = response as { errors: TValidationErrors };
+      if (errors) {
+        return setFormErrors(errors);
+      } else {
+        dispatch({
+          type: 'RESET FORM',
+          field: '',
+          payload: '',
+        });
+        setFormErrors(null);
+        toast.success('Signup successful!', { autoClose: 2000 });
+        navigate('/login', { replace: true });
+      }
     }
   }, [response, navigate]);
 
@@ -164,7 +167,7 @@ const SignupForm = () => {
           Submit
         </button>
       </Form>
-      {errors ? <ErrorList errors={errors} /> : ''}
+      {formErrors ? <ErrorList errors={formErrors} /> : ''}
     </>
   );
 };
