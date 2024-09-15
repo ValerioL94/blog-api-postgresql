@@ -1,4 +1,6 @@
-const ErrorList = ({ errors }) => {
+import { TValidationErrors } from '../types/types';
+
+const ErrorList = ({ errors }: { errors: TValidationErrors }) => {
   return (
     <>
       <ul className='flex flex-col gap-2 list-disc p-4'>
