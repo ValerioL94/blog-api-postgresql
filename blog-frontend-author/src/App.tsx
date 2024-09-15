@@ -1,6 +1,7 @@
 import {
   createBrowserRouter,
   createRoutesFromElements,
+  Navigate,
   redirect,
   Route,
   RouterProvider,
@@ -12,8 +13,11 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import ErrorPage from './pages/ErrorPage';
 import { userAction } from './actions/userActions';
+import Logout from './pages/Logout';
+import { useAuth } from './provider/context';
 
 function App() {
+  const { authData } = useAuth();
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
@@ -24,12 +28,16 @@ function App() {
           <Route
             path='signup'
             action={async ({ request }) => await userAction(request, 'signup')}
-            element={<Signup />}
+            element={authData ? <Navigate replace to={'/home'} /> : <Signup />}
           />
           <Route
             path='login'
             action={async ({ request }) => await userAction(request, 'login')}
-            element={<Login />}
+            element={authData ? <Navigate replace to={'/home'} /> : <Login />}
+          />
+          <Route
+            path='logout'
+            element={!authData ? <Navigate replace to={'/home'} /> : <Logout />}
           />
         </Route>
       </>
