@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { Form, useActionData, useNavigate } from 'react-router-dom';
+import { Form, useActionData } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ErrorList from './ErrorList';
 import { useAuth } from '../provider/context';
+import { TAuthData, TValidationErrors } from '../types/types';
 
 const initialState = {
   email: '',
@@ -12,27 +13,28 @@ const initialState = {
 const LoginForm = () => {
   const [formState, setFormState] = useState(initialState);
   const [showPassword, setShowPassword] = useState(false);
-  const [errors, setErrors] = useState(null);
+  const [formErrors, setFormErrors] = useState<TValidationErrors | null>(null);
   const { setAuthData } = useAuth();
   const response = useActionData();
-  const navigate = useNavigate();
-  function handleChange(e) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setFormState({
       ...formState,
       [e.target.name]: e.target.value,
     });
   }
   useEffect(() => {
-    if (response && response.errors) {
-      setErrors(response.errors);
+    if (response) {
+      const { errors } = response as { errors: TValidationErrors };
+      if (errors) {
+        return setFormErrors(errors);
+      } else {
+        toast.success('Login successful!', { autoClose: 2000 });
+        setFormState(initialState);
+        setFormErrors(null);
+        setAuthData(response as TAuthData);
+      }
     }
-    if (response && !response.errors) {
-      toast.success('Login successful!', { autoClose: 2000 });
-      setFormState(initialState);
-      setErrors(null);
-      setAuthData(response);
-    }
-  }, [response, navigate, setAuthData]);
+  }, [response, setAuthData]);
 
   return (
     <>
@@ -80,7 +82,7 @@ const LoginForm = () => {
           Submit
         </button>
       </Form>
-      {errors ? <ErrorList errors={errors} /> : ''}
+      {formErrors ? <ErrorList errors={formErrors} /> : ''}
     </>
   );
 };
