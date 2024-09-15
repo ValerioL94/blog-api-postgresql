@@ -1,4 +1,4 @@
-import { SignupReducerAction, TSignupForm } from '../types/types';
+import { TSignupReducerAction, TSignupForm } from '../types/types';
 
 export const initialFormState: TSignupForm = {
   username: '',
@@ -13,7 +13,7 @@ export const initialFormState: TSignupForm = {
 
 export const signupReducer = (
   state: TSignupForm,
-  action: SignupReducerAction
+  action: TSignupReducerAction
 ) => {
   switch (action.type) {
     case 'HANDLE INPUT TEXT':
