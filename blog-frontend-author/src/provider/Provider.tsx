@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import { AuthContext } from './context';
-import { TAuthData } from '../types/types';
+import { TAuthContext, TAuthData } from '../types/types';
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const localData = localStorage.getItem('authData');
   const defaultData: TAuthData = localData ? JSON.parse(localData) : null;
-  const [authData, setAuthData] = useState<TAuthData>(defaultData);
+  const [authData, setAuthData] = useState<TAuthData | null>(defaultData);
 
   function handleExpiredToken() {
     localStorage.clear();
@@ -29,7 +29,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [authData]);
 
-  const contextValue = useMemo(
+  const contextValue: TAuthContext = useMemo(
     () => ({
       authData,
       setAuthData,
