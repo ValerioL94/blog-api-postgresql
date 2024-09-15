@@ -22,10 +22,8 @@ const SignupForm = () => {
         payload: '',
       });
       setErrors(null);
-      toast.success('Signup successful!', { autoClose: 3000 });
-      setTimeout(() => {
-        navigate('/login', { replace: true });
-      }, 3000);
+      toast.success('Signup successful!', { autoClose: 2000 });
+      navigate('/login', { replace: true });
     }
   }, [response, navigate]);
 
