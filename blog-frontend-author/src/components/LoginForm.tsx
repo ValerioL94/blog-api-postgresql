@@ -3,6 +3,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Form, useActionData, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ErrorList from './ErrorList';
+import { useAuth } from '../provider/context';
 
 const initialState = {
   email: '',
@@ -12,6 +13,7 @@ const LoginForm = () => {
   const [formState, setFormState] = useState(initialState);
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState(null);
+  const { setAuthData } = useAuth();
   const response = useActionData();
   const navigate = useNavigate();
   function handleChange(e) {
@@ -25,14 +27,12 @@ const LoginForm = () => {
       setErrors(response.errors);
     }
     if (response && !response.errors) {
+      toast.success('Login successful!', { autoClose: 2000 });
       setFormState(initialState);
       setErrors(null);
-      toast.success('Signup successful!', { autoClose: 3000 });
-      setTimeout(() => {
-        navigate('/home', { replace: true });
-      }, 3000);
+      setAuthData(response);
     }
-  }, [response, navigate]);
+  }, [response, navigate, setAuthData]);
 
   return (
     <>
