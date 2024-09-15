@@ -7,11 +7,11 @@ export type TUser = {
 export type TAuthData = {
   token: string;
   user: TUser;
-} | null;
+};
 
 export type TAuthContext = {
-  authData: TAuthData;
-  setAuthData: React.Dispatch<React.SetStateAction<TAuthData>>;
+  authData: TAuthData | null;
+  setAuthData: React.Dispatch<React.SetStateAction<TAuthData | null>>;
 };
 
 export type TSignupForm = {
@@ -25,8 +25,13 @@ export type TSignupForm = {
   showAuthorKey: boolean;
 };
 
-export type SignupReducerAction = {
+export type TSignupReducerAction = {
   type: string;
   field: string;
   payload: string;
 };
+
+export type TValidationError = {
+  message: string;
+};
+export type TValidationErrors = TValidationError[];
