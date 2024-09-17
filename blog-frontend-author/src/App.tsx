@@ -18,6 +18,7 @@ import { useAuth } from './provider/context';
 import Posts from './pages/Posts';
 import { postsLoader } from './loaders/postLoader';
 import NewPost from './pages/NewPost';
+import ProtectedRoute from './pages/ProtectedRoute';
 
 function App() {
   const { authData } = useAuth();
@@ -42,12 +43,14 @@ function App() {
             path='logout'
             element={!authData ? <Navigate replace to={'/home'} /> : <Logout />}
           />
-          <Route
-            path='posts'
-            loader={async () => await postsLoader()}
-            element={!authData ? <Navigate replace to={'/home'} /> : <Posts />}
-          />
-          <Route path='/posts/new-post' element={<NewPost />} />
+          <Route path='posts' element={<ProtectedRoute />}>
+            <Route
+              index
+              loader={async () => await postsLoader()}
+              element={<Posts />}
+            />
+            <Route path='new-post' element={<NewPost />} />
+          </Route>
         </Route>
       </>
     )
