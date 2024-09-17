@@ -15,6 +15,9 @@ import ErrorPage from './pages/ErrorPage';
 import { userAction } from './actions/userActions';
 import Logout from './pages/Logout';
 import { useAuth } from './provider/context';
+import Posts from './pages/Posts';
+import { postsLoader } from './loaders/postLoader';
+import NewPost from './pages/NewPost';
 
 function App() {
   const { authData } = useAuth();
@@ -39,6 +42,12 @@ function App() {
             path='logout'
             element={!authData ? <Navigate replace to={'/home'} /> : <Logout />}
           />
+          <Route
+            path='posts'
+            loader={async () => await postsLoader()}
+            element={!authData ? <Navigate replace to={'/home'} /> : <Posts />}
+          />
+          <Route path='/posts/new-post' element={<NewPost />} />
         </Route>
       </>
     )
