@@ -36,23 +36,23 @@ export type TValidationError = {
 };
 export type TValidationErrors = TValidationError[];
 
-export type PostPreview = Omit<PostDetail, 'comments'>;
+export type TPostPreview = Omit<TPostDetail, 'comments'>;
 
-export type PostList = PostPreview[];
+export type TPostList = TPostPreview[];
 
-export type PostCreate = {
+export type TPostCreate = {
   title: string;
   content: string;
-  published: boolean;
+  published: string;
   authorId: string;
 };
-export type PostUpdate = Omit<PostCreate, 'authorId'>;
+export type TPostUpdate = Omit<TPostCreate, 'authorId'>;
 
-export type PostDetail = {
+export type TPostDetail = {
   id: string;
   title: string;
   content: string;
-  published: boolean;
+  published: string;
   createdAt: Date;
   updatedAt: Date;
   authorId: string;
@@ -60,10 +60,10 @@ export type PostDetail = {
     username: string;
     email: string;
   };
-  comments?: CommentList;
+  comments?: TCommentList;
 };
 
-export type CommentDetail = {
+export type TCommentDetail = {
   id: string;
   username: string;
   content: string;
@@ -72,9 +72,9 @@ export type CommentDetail = {
   postId: string;
 };
 
-export type CommentList = CommentDetail[];
+export type TCommentList = TCommentDetail[];
 
-export type CommentUpsert = {
+export type TCommentUpsert = {
   content: string;
   username: string;
 };
