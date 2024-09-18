@@ -55,7 +55,7 @@ const SignupForm = () => {
           Username
         </label>
         <input
-          className='block w-full py-1 px-2 mb-3 border-2 border-solid border-gray-500 rounded-md text-sm hover:border-green-600 focus:border-green-700 outline-none  '
+          className='block w-full py-1 px-2 mb-3 border-2 border-solid border-gray-500 rounded-md text-sm hover:border-green-600 focus:border-green-700 outline-none'
           type='text'
           name='username'
           id='username'
@@ -67,7 +67,7 @@ const SignupForm = () => {
         />
         <label htmlFor='email'>Email</label>
         <input
-          className='block w-full py-1 px-2 mb-3 border-2 border-solid border-gray-500 rounded-md text-sm hover:border-green-600 focus:border-green-700 outline-none  '
+          className='block w-full py-1 px-2 mb-3 border-2 border-solid border-gray-500 rounded-md text-sm hover:border-green-600 focus:border-green-700 outline-none'
           type='email'
           name='email'
           id='email'
@@ -98,7 +98,7 @@ const SignupForm = () => {
           )}
         </div>
         <input
-          className='block w-full py-1 px-2 mb-3 border-2 border-solid border-gray-500 rounded-md text-sm hover:border-green-600 focus:border-green-700 outline-none  '
+          className='block w-full py-1 px-2 mb-3 border-2 border-solid border-gray-500 rounded-md text-sm hover:border-green-600 focus:border-green-700 outline-none'
           type={formState.showPassword ? 'text' : 'password'}
           name='password'
           id='password'
@@ -122,7 +122,7 @@ const SignupForm = () => {
           )}
         </div>
         <input
-          className='block w-full py-1 px-2 mb-3 border-2 border-solid border-gray-500 rounded-md text-sm hover:border-green-600 focus:border-green-700 outline-none  '
+          className='block w-full py-1 px-2 mb-3 border-2 border-solid border-gray-500 rounded-md text-sm hover:border-green-600 focus:border-green-700 outline-none'
           type={formState.showConfirm ? 'text' : 'password'}
           name='confirm'
           id='confirm'
