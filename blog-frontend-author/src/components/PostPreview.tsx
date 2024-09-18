@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
-import { PostPreview } from '../types/types';
+import { TPostPreview } from '../types/types';
 
-const Post = ({ postData }: { postData: PostPreview }) => {
+const PostPreview = ({ postData }: { postData: TPostPreview }) => {
   return (
     <div key={postData.id} className='p-1'>
-      <h2 className='text-center'>
+      <h2>
         <Link to={postData.id}>{postData.title}</Link>
       </h2>
       <p>
@@ -19,9 +19,8 @@ const Post = ({ postData }: { postData: PostPreview }) => {
         <strong>Date: </strong>
         {new Date(postData.createdAt).toLocaleString()}
       </p>
-      <hr />
     </div>
   );
 };
 
-export default Post;
+export default PostPreview;
