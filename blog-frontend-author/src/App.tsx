@@ -16,9 +16,11 @@ import { userAction } from './actions/userActions';
 import Logout from './pages/Logout';
 import { useAuth } from './provider/context';
 import Posts from './pages/Posts';
-import { postsLoader } from './loaders/postLoader';
+import { postLoader, postsLoader } from './loaders/postLoader';
 import NewPost from './pages/NewPost';
 import ProtectedRoute from './pages/ProtectedRoute';
+import { postAction } from './actions/postActions';
+import PostDetail from './components/PostDetail';
 
 function App() {
   const { authData } = useAuth();
@@ -49,7 +51,18 @@ function App() {
               loader={async () => await postsLoader()}
               element={<Posts />}
             />
-            <Route path='new-post' element={<NewPost />} />
+            <Route
+              path='new-post'
+              element={<NewPost />}
+              action={async ({ request, params }) =>
+                await postAction(request, params, authData!.token)
+              }
+            />
+            <Route
+              path=':postId'
+              element={<PostDetail />}
+              loader={async ({ params }) => await postLoader(params)}
+            />
           </Route>
         </Route>
       </>
