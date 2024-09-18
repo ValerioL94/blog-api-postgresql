@@ -17,6 +17,7 @@ async function postRequest(
   return response.json();
 }
 
+// Send post request to login/signup endpoint depending on path string
 export async function userAction(request: Request, path: string) {
   const endpoint = `/api/users/${path}`;
   const formData = await request.formData();
