@@ -39,14 +39,14 @@ const ErrorPage = () => {
   }
   return (
     <>
-      <div className='flex items-center justify-center bg-green-50'>
-        <h1 className='text-green-700 font-bold'>Error...</h1>
+      <div className='flex items-center justify-center'>
+        <h1 className='text-green-700 font-bold'>Error</h1>
       </div>
-      <div className='flex flex-col items-center gap-2 bg-green-50'>
+      <div className='flex flex-col items-center gap-2'>
         {RootBoundary()}
-        <Link to='home'>Click here to go to home page.</Link>
+        <Link to='home'>Click this link to go to home page.</Link>
       </div>
-      <div className='bg-green-50'></div>
+      <div></div>
     </>
   );
 };
