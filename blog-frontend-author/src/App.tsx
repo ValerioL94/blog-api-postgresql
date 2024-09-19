@@ -6,7 +6,7 @@ import {
   Route,
   RouterProvider,
 } from 'react-router-dom';
-import MainLayout from './components/MainLayout';
+import GlobalLayout from './components/GlobalLayout';
 import HomePage from './pages/HomePage';
 import About from './pages/About';
 import Signup from './pages/Signup';
@@ -22,12 +22,12 @@ import ProtectedRoute from './pages/ProtectedRoute';
 import { postAction } from './actions/postActions';
 import PostDetail from './components/PostDetail';
 
-function App() {
+const App = () => {
   const { authData } = useAuth();
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
-        <Route path='/' errorElement={<ErrorPage />} element={<MainLayout />}>
+        <Route path='/' errorElement={<ErrorPage />} element={<GlobalLayout />}>
           <Route index loader={async () => redirect('home')} />
           <Route path='home' element={<HomePage />} />
           <Route path='about' element={<About />} />
@@ -69,6 +69,6 @@ function App() {
     )
   );
   return <RouterProvider router={router} />;
-}
+};
 
 export default App;
