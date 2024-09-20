@@ -24,7 +24,7 @@ const Navbar = () => {
             </li>
             <li>
               <NavLink to={'logout'} className={linkClass}>
-                Log-out
+                Logout
               </NavLink>
             </li>
           </>
@@ -32,13 +32,13 @@ const Navbar = () => {
           <>
             <li>
               <NavLink to={'signup'} className={linkClass}>
-                Sign-up
+                Signup
               </NavLink>
             </li>
 
             <li>
               <NavLink to={'login'} className={linkClass}>
-                Log-in
+                Login
               </NavLink>
             </li>
           </>

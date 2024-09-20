@@ -63,7 +63,7 @@ const PostForm = () => {
       <Form
         onSubmit={(e) => {
           e.preventDefault();
-          submit(formData, { method: 'POST' });
+          submit({ ...formData, token: authData!.token }, { method: 'POST' });
         }}
         className='p-1'
         method='POST'
