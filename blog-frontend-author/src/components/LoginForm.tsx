@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { Form, useActionData } from 'react-router-dom';
+import { Form, useActionData, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ErrorList from './ErrorList';
 import { useAuth } from '../provider/context';
@@ -16,6 +16,7 @@ const LoginForm = () => {
   const [formErrors, setFormErrors] = useState<TValidationErrors | null>(null);
   const { setAuthData } = useAuth();
   const response = useActionData();
+  const navigate = useNavigate();
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setFormState({
       ...formState,
@@ -32,9 +33,10 @@ const LoginForm = () => {
         setFormState(initialState);
         setFormErrors(null);
         setAuthData(response as TAuthData);
+        navigate('/home', { replace: true });
       }
     }
-  }, [response, setAuthData]);
+  }, [response, navigate, setAuthData]);
 
   return (
     <>
