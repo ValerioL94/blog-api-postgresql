@@ -7,7 +7,7 @@ async function authRequest(
   data: {
     [k: string]: FormDataEntryValue;
   },
-  token: string
+  token: FormDataEntryValue
 ) {
   const response = await fetch(url, {
     method,
@@ -35,17 +35,20 @@ function getEndpoint(method: string, id: string | undefined) {
 }
 
 // send a POST / PUT / DELETE request to the backend
-export async function postAction(
-  request: Request,
-  params: Params,
-  token: string
-) {
+export async function postAction(request: Request, params: Params) {
   const method = request.method;
   const formData = await request.formData();
   const payload = Object.fromEntries(formData.entries());
+  const postData = {
+    title: payload.title,
+    content: payload.content,
+    published: payload.published,
+    authorId: payload.authorId,
+  };
+  const token = payload.token;
   const endpoint = getEndpoint(request.method, params.postId);
   try {
-    const response = await authRequest(endpoint, method, payload, token);
+    const response = await authRequest(endpoint, method, postData, token);
     return response;
   } catch (error) {
     throw new Error((error as Error).message);
