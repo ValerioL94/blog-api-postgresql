@@ -44,7 +44,16 @@ const ErrorPage = () => {
       </div>
       <div className='flex flex-col items-center gap-2'>
         {RootBoundary()}
-        <Link to='home'>Click this link to go to home page.</Link>
+        <Link to='/'>Click this link to go to home page.</Link>
+        <img
+          className='rounded-3xl border-solid border-green-700 border-2'
+          src='https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExdXl1N2F4NHlxdDBhYjlocnI5cmVvNWdicGFma2hmeTYwajV5eW83aCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/n7K7ghLDxsqqRysHDx/giphy.gif'
+        />
+        <p>
+          <a href='https://giphy.com/gifs/pudgypenguins-fish-fishing-pudgy-n7K7ghLDxsqqRysHDx'>
+            via GIPHY
+          </a>
+        </p>
       </div>
       <div></div>
     </>
