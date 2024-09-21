@@ -5,6 +5,7 @@ import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 
 import AuthProvider from '../../src/provider/Provider';
 import { AuthContext } from '../../src/provider/context';
+import { TAuthContext } from '../../src/types/types';
 
 describe('homepage conditional rendering', () => {
   const router = createMemoryRouter(routes, { initialEntries: ['/home'] });
@@ -21,7 +22,7 @@ describe('homepage conditional rendering', () => {
     ).toBeInTheDocument();
   });
   test('user authenticated message', () => {
-    const testContext = {
+    const testContext: TAuthContext = {
       authData: {
         token: 'test',
         user: { id: 'test', username: 'testUser', email: 'test@gmail.com' },

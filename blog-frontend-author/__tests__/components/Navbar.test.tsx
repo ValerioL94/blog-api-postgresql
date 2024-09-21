@@ -6,6 +6,7 @@ import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 
 import AuthProvider from '../../src/provider/Provider';
 import { AuthContext } from '../../src/provider/context';
+import { TAuthContext } from '../../src/types/types';
 
 describe('navbar rendering/navigating', () => {
   describe('no authentication tests', () => {
@@ -49,7 +50,7 @@ describe('navbar rendering/navigating', () => {
   describe('auth only testing', () => {
     const router = createMemoryRouter(routes, { initialEntries: ['/home'] });
     const user = userEvent.setup();
-    const testContext = {
+    const testContext: TAuthContext = {
       authData: {
         token: 'test',
         user: { id: 'test', username: 'test', email: 'test@gmail.com' },
