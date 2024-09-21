@@ -9,7 +9,7 @@ const HomePage = () => {
       {authData ? (
         <>
           <p>
-            Welcome back <strong>{authData.user.username}</strong> !
+            Welcome back <strong>{authData.user.username}</strong>!
           </p>
           <p>
             Here to make a new <Link to={'/posts'}>post</Link> ? Or just

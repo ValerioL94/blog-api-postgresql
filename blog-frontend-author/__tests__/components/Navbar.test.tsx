@@ -59,7 +59,6 @@ describe('navbar rendering/navigating', () => {
     beforeEach(() => {
       render(
         <AuthContext.Provider value={testContext}>
-          {' '}
           <RouterProvider router={router} />
         </AuthContext.Provider>
       );
