@@ -21,8 +21,8 @@ describe('routes rendering/navigating', () => {
 
     render(<RouterProvider router={router} />);
 
-    const homeHeading = screen.getByRole('heading');
-    expect(homeHeading).toHaveTextContent(/homepage/i);
+    const homeHeading = screen.getByRole('heading', { name: /homepage/i });
+    expect(homeHeading).toBeInTheDocument();
   });
   test('error page on nonexisting page', async () => {
     const badRoute = '/bad/lost';
