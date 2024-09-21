@@ -3,10 +3,7 @@ import { useAuth } from '../provider/context';
 
 const ProtectedRoute = () => {
   const { authData } = useAuth();
-  if (!authData) {
-    return <Navigate to='/home' replace={true} />;
-  }
-  return <Outlet />;
+  return <>{authData ? <Outlet /> : <Navigate to='/home' replace={true} />}</>;
 };
 
 export default ProtectedRoute;
