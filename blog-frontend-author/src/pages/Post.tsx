@@ -2,7 +2,7 @@ import parse from 'html-react-parser';
 import { Link, useLoaderData } from 'react-router-dom';
 import { TPostDetail } from '../types/types';
 
-const PostDetail = () => {
+const Post = () => {
   const { post } = useLoaderData() as { post: TPostDetail };
   return (
     <div className='flex flex-col gap-2 py-4 px-8 w-full max-w-3xl rounded bg-white shadow-md shadow-gray-500'>
@@ -71,4 +71,4 @@ const PostDetail = () => {
   );
 };
 
-export default PostDetail;
+export default Post;

@@ -5,7 +5,7 @@ import HomePage from './pages/HomePage';
 import Login from './pages/Login';
 import Logout from './pages/Logout';
 import NewPost from './pages/NewPost';
-import PostDetail from './pages/Post';
+import Post from './pages/Post';
 import Posts from './pages/Posts';
 import ProtectedRoute from './pages/ProtectedRoute';
 import Signup from './pages/Signup';
@@ -45,7 +45,7 @@ export const routes = createRoutesFromElements(
       />
       <Route
         path=':postId'
-        element={<PostDetail />}
+        element={<Post />}
         loader={async ({ params }) => await postLoader(params)}
       />
     </Route>
