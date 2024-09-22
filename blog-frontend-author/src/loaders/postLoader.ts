@@ -14,6 +14,6 @@ export async function postsLoader() {
 }
 
 export async function postLoader(params: Params) {
-  const post = await getRequest(`api/posts/${params.postId}`);
+  const post = await getRequest(`/api/posts/${params.postId}`);
   return post;
 }
