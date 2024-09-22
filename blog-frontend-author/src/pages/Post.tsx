@@ -9,7 +9,7 @@ const Post = () => {
       <h1 className='text-center text-green-700 font-bold text-xl'>
         {post.title}
       </h1>
-      <div className='flex justify-between'>
+      <div className='flex sm:flex-row flex-col justify-between'>
         <p>
           <strong>Author: </strong>
           {post.author.username}
