@@ -1,8 +1,10 @@
 import { Form, useActionData, useNavigate, useSubmit } from 'react-router-dom';
 import { useAuth } from '../provider/context';
 import { useEffect, useMemo, useState } from 'react';
-import { TPostCreate, TValidationErrors } from '../types/types';
+import { TinyMCEEVent, TPostCreate, TValidationErrors } from '../types/types';
 import { Editor } from '@tinymce/tinymce-react';
+import { Editor as TinyMCEEditor } from 'tinymce';
+
 import ErrorList from './ErrorList';
 import { toast } from 'react-toastify';
 
@@ -23,9 +25,11 @@ const PostForm = () => {
   const [formData, setFormData] = useState(initialFormState);
   const [formErrors, setFormErrors] = useState<TValidationErrors | null>(null);
   function handleChange(
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
+    e:
+      | React.ChangeEvent<
+          HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+        >
+      | TinyMCEEVent
   ) {
     const { name, value } = e.target;
     setFormData({
@@ -33,12 +37,12 @@ const PostForm = () => {
       [name]: value,
     });
   }
-  const parseEditorData = (content: string, editor) => {
+  const parseEditorData = (content: string, editor: TinyMCEEditor) => {
     const { targetElm } = editor;
-    const { name } = targetElm;
+    const { id } = targetElm;
     return {
       target: {
-        name,
+        name: id,
         value: content,
       },
     };
