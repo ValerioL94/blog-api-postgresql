@@ -47,6 +47,9 @@ export const routes = createRoutesFromElements(
         path=':postId'
         element={<Post />}
         loader={async ({ params }) => await postLoader(params)}
+        action={async ({ request, params }) =>
+          await postAction(request, params)
+        }
       />
     </Route>
   </Route>
