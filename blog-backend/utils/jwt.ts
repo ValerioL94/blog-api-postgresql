@@ -4,7 +4,6 @@ import {
   VerifiedCallback,
 } from 'passport-jwt';
 import { prisma } from '../prisma/client';
-import { Payload } from '../types/types';
 
 const JWT_SECRET = process.env.SECRET || 'randomSecret';
 
@@ -12,7 +11,7 @@ const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: JWT_SECRET,
 };
-function verify(jwt_payload: Payload, done: VerifiedCallback) {
+function verify(jwt_payload: { id: string }, done: VerifiedCallback) {
   prisma.user
     .findUnique({ where: { id: jwt_payload.id } })
     .then((user) => {
