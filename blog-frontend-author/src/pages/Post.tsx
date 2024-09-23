@@ -1,11 +1,26 @@
 import parse from 'html-react-parser';
-import { Link, useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData, useNavigate, useSubmit } from 'react-router-dom';
 import { TPostDetail } from '../types/types';
 import { useAuth } from '../provider/context';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 const Post = () => {
   const { authData } = useAuth();
   const { post } = useLoaderData() as { post: TPostDetail };
+  const [edit, setEdit] = useState(false);
+  const submit = useSubmit();
+  const navigate = useNavigate();
+
+  function deletePost(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    e.preventDefault();
+    const result = confirm('Delete this post and all its comments?');
+    if (result) {
+      submit({ id: post.id, token: authData!.token }, { method: 'DELETE' });
+      toast.success('Post deleted!', { autoClose: 2000 });
+      navigate('/home', { replace: true });
+    }
+  }
 
   return (
     <div className='flex flex-col gap-2 py-4 px-8 w-full max-w-3xl rounded bg-white shadow-md shadow-gray-500'>
@@ -44,12 +59,14 @@ const Post = () => {
             <button
               type='button'
               className='h-7 min-w-20 border-2 border-gray-500 border-solid rounded-md text-sm font-semibold cursor-pointer text-green-700 bg-white hover:bg-green-600 hover:text-white  focus:bg-green-700 focus:text-white'
+              onClick={() => setEdit(true)}
             >
               Edit
             </button>
             <button
               type='button'
               className='h-7 min-w-20 border-2 border-gray-500 border-solid rounded-md text-sm font-semibold cursor-pointer text-green-700 bg-white hover:bg-green-600 hover:text-white  focus:bg-green-700 focus:text-white'
+              onClick={deletePost}
             >
               Delete
             </button>
