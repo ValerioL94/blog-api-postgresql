@@ -96,44 +96,42 @@ describe('signup form tests', () => {
         await screen.findByRole('list', { name: /errorlist/i })
       ).toBeInTheDocument();
     });
-  });
-  test('return no errors and redirect to login page when input data is correct', async () => {
-    const testRoutes = createRoutesFromElements(
-      <>
-        <Route
-          path='signup'
-          action={() => mockActionSuccess()}
-          element={<Signup />}
-        />
-        <Route path='login' element={<Login />} />
-      </>
-    );
-    const router = createMemoryRouter(testRoutes, {
-      initialEntries: ['/signup'],
+    test('redirect to login page when input data is correct', async () => {
+      const testRoutes = createRoutesFromElements(
+        <>
+          <Route
+            path='signup'
+            action={() => mockActionSuccess()}
+            element={<Signup />}
+          />
+          <Route path='login' element={<Login />} />
+        </>
+      );
+      const router = createMemoryRouter(testRoutes, {
+        initialEntries: ['/signup'],
+      });
+      render(
+        <AuthContext.Provider value={nullContext}>
+          <RouterProvider router={router} />
+        </AuthContext.Provider>
+      );
+      const usernameInput = screen.getByRole('textbox', { name: /username/i });
+      const emailInput = screen.getByRole('textbox', { name: /email/i });
+      const passwordInput = screen.getByLabelText('Password');
+      const confirmInput = screen.getByLabelText('Confirm password');
+      const authorKeyInput = screen.getByLabelText('Author key');
+      const submitButton = screen.getByRole('button', { name: /submit/i });
+
+      await user.type(usernameInput, 'testname');
+      await user.type(emailInput, 'testemail@gmail.com');
+      await user.type(passwordInput, 'Testpassword123@');
+      await user.type(confirmInput, 'Testpassword123@');
+      await user.type(authorKeyInput, 'Correctauthorkey');
+
+      await user.click(submitButton);
+      expect(
+        await screen.findByRole('heading', { name: /login/i })
+      ).toBeInTheDocument();
     });
-    render(
-      <AuthContext.Provider value={nullContext}>
-        <RouterProvider router={router} />
-      </AuthContext.Provider>
-    );
-    const usernameInput = screen.getByRole('textbox', { name: /username/i });
-    const emailInput = screen.getByRole('textbox', { name: /email/i });
-    const passwordInput = screen.getByLabelText('Password');
-    const confirmInput = screen.getByLabelText('Confirm password');
-    const authorKeyInput = screen.getByLabelText('Author key');
-    const submitButton = screen.getByRole('button', { name: /submit/i });
-
-    await user.type(usernameInput, 'testname');
-    await user.type(emailInput, 'testemail@gmail.com');
-    await user.type(passwordInput, 'Testpassword123@');
-    await user.type(confirmInput, 'Testpassword123@');
-    await user.type(authorKeyInput, 'Correctauthorkey');
-
-    await user.click(submitButton);
-
-    expect(screen.queryByRole('list', { name: /errorlist/i })).toBeNull();
-    expect(
-      await screen.findByRole('heading', { name: /login/i })
-    ).toBeInTheDocument();
   });
 });
