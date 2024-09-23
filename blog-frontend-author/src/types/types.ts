@@ -40,6 +40,8 @@ export type TPostPreview = Omit<TPostDetail, 'comments'>;
 
 export type TPostList = TPostPreview[];
 
+export type TinyMCEEVent = { target: { name: string; value: string } };
+
 export type TPostCreate = {
   title: string;
   content: string;
