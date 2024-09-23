@@ -1,9 +1,12 @@
 import parse from 'html-react-parser';
 import { Link, useLoaderData } from 'react-router-dom';
 import { TPostDetail } from '../types/types';
+import { useAuth } from '../provider/context';
 
 const Post = () => {
+  const { authData } = useAuth();
   const { post } = useLoaderData() as { post: TPostDetail };
+
   return (
     <div className='flex flex-col gap-2 py-4 px-8 w-full max-w-3xl rounded bg-white shadow-md shadow-gray-500'>
       <h1 className='text-center text-green-700 font-bold text-xl'>
@@ -36,18 +39,41 @@ const Post = () => {
           justifyContent: 'space-between',
         }}
       >
-        <button
-          type='button'
-          className='h-7 min-w-20 border-2 border-gray-500 border-solid rounded-md text-sm font-semibold cursor-pointer text-green-700 bg-white hover:bg-green-600 hover:text-white  focus:bg-green-700 focus:text-white'
-        >
-          Edit
-        </button>
-        <button
-          type='submit'
-          className='h-7 min-w-20 border-2 border-gray-500 border-solid rounded-md text-sm font-semibold cursor-pointer text-green-700 bg-white hover:bg-green-600 hover:text-white  focus:bg-green-700 focus:text-white'
-        >
-          Delete
-        </button>
+        {authData?.user.id === post.authorId ? (
+          <>
+            <button
+              type='button'
+              className='h-7 min-w-20 border-2 border-gray-500 border-solid rounded-md text-sm font-semibold cursor-pointer text-green-700 bg-white hover:bg-green-600 hover:text-white  focus:bg-green-700 focus:text-white'
+            >
+              Edit
+            </button>
+            <button
+              type='button'
+              className='h-7 min-w-20 border-2 border-gray-500 border-solid rounded-md text-sm font-semibold cursor-pointer text-green-700 bg-white hover:bg-green-600 hover:text-white  focus:bg-green-700 focus:text-white'
+            >
+              Delete
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              disabled
+              title='Only the original author can edit this post'
+              type='button'
+              className='h-7 min-w-20 border-2 border-gray-500 border-solid rounded-md text-sm font-semibold cursor-help text-green-900 bg-gray-300 '
+            >
+              Edit
+            </button>
+            <button
+              disabled
+              title='Only the original author can delete this post'
+              type='button'
+              className='h-7 min-w-20 border-2 border-gray-500 border-solid rounded-md text-sm font-semibold cursor-help text-green-900 bg-gray-300 '
+            >
+              Delete
+            </button>
+          </>
+        )}
       </div>
 
       <div
