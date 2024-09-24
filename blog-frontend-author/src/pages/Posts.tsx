@@ -1,6 +1,7 @@
 import { Link, useLoaderData } from 'react-router-dom';
 import { TPostList } from '../types/types';
 import PostPreview from '../components/PostPreview';
+import CustomButton from '../components/CustomButton';
 
 const Posts = () => {
   const { posts } = useLoaderData() as { posts: TPostList };
@@ -15,16 +16,13 @@ const Posts = () => {
           <h2>There are no posts.</h2>
         )}
       </div>
-      <hr />
       <div className='flex items-center justify-between m-2 font-semibold'>
         <Link to={'new-post'}>New Post</Link>
-        <button
-          type='button'
-          className='h-7 min-w-20 border-2 border-gray-500 border-solid rounded-md text-sm font-semibold cursor-pointer text-green-700 bg-white hover:bg-green-600 hover:text-white  focus:bg-green-700 focus:text-white'
+        <CustomButton
+          content='Top'
+          title='Go to top'
           onClick={() => (document.documentElement.scrollTop = 0)}
-        >
-          Top &#8679;
-        </button>
+        />
       </div>
     </div>
   );
