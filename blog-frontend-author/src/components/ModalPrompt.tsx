@@ -1,7 +1,9 @@
-import { useNavigate, useSubmit } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useActionData, useNavigate, useSubmit } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { TValidationErrors } from '../types/types';
 
-const ModalComponent = ({
+const ModalPrompt = ({
   setShowModal,
   postId,
   token,
@@ -12,11 +14,21 @@ const ModalComponent = ({
 }) => {
   const submit = useSubmit();
   const navigate = useNavigate();
+  const response = useActionData();
   function handleConfirm() {
     submit({ id: postId, token: token }, { method: 'DELETE' });
-    toast.success('Post deleted!', { autoClose: 2000 });
-    navigate('/home', { replace: true });
   }
+  useEffect(() => {
+    if (response) {
+      const { errors } = response as { errors: TValidationErrors };
+      if (errors) {
+        throw new Error('Something went wrong');
+      } else {
+        toast.success('Post deleted!', { autoClose: 2000 });
+        navigate('/posts', { replace: true });
+      }
+    }
+  }, [response, navigate]);
   return (
     <div
       className='box-border fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-green-900 bg-opacity-30 backdrop-blur-sm animate-fade-in'
@@ -48,4 +60,4 @@ const ModalComponent = ({
   );
 };
 
-export default ModalComponent;
+export default ModalPrompt;
