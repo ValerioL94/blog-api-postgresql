@@ -73,7 +73,7 @@ const PostFormUpdate = ({
           e.preventDefault();
           submit({ ...formData, token: authData!.token }, { method: 'PUT' });
         }}
-        className='p-1'
+        className='sm:p-1'
         method='PUT'
       >
         <label htmlFor='title'>Title: </label>
@@ -154,7 +154,7 @@ const PostFormUpdate = ({
         </select>
         <div className='flex my-2 items-center justify-between'>
           <button
-            className='h-7 min-w-20 border-2 border-gray-500 border-solid rounded-md text-sm font-semibold cursor-pointer text-green-700 bg-white hover:bg-green-600 hover:text-white  focus:bg-green-700 focus:text-white'
+            className='h-8 min-w-20 border-2 border-gray-500 border-solid rounded-md text-sm font-semibold cursor-pointer text-green-700 bg-white hover:bg-green-600 hover:text-white  focus:bg-green-700 focus:text-white'
             type='submit'
           >
             Submit
