@@ -8,7 +8,7 @@ import { Editor as TinyMCEEditor } from 'tinymce';
 import ErrorList from './ErrorList';
 import { toast } from 'react-toastify';
 
-const PostForm = () => {
+const PostFormCreate = () => {
   const { authData } = useAuth();
   const initialFormState: TPostCreate = useMemo(
     () => ({
@@ -25,11 +25,7 @@ const PostForm = () => {
   const [formData, setFormData] = useState(initialFormState);
   const [formErrors, setFormErrors] = useState<TValidationErrors | null>(null);
   function handleChange(
-    e:
-      | React.ChangeEvent<
-          HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-        >
-      | TinyMCEEVent
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | TinyMCEEVent
   ) {
     const { name, value } = e.target;
     setFormData({
@@ -160,4 +156,4 @@ const PostForm = () => {
   );
 };
 
-export default PostForm;
+export default PostFormCreate;
