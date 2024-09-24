@@ -54,7 +54,7 @@ export type TPostDetail = {
   id: string;
   title: string;
   content: string;
-  published: string;
+  published: boolean;
   createdAt: Date;
   updatedAt: Date;
   authorId: string;
