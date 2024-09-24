@@ -60,13 +60,11 @@ const PostFormUpdate = ({
       if (errors) {
         return setFormErrors(errors);
       } else {
-        setFormData(initialFormState);
-        setFormErrors(null);
         toast.success('Post updated!', { autoClose: 2000 });
         navigate('/posts', { replace: true });
       }
     }
-  }, [response, initialFormState, navigate]);
+  }, [response, navigate]);
 
   return (
     <>

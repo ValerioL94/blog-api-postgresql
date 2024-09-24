@@ -50,13 +50,11 @@ const PostFormCreate = () => {
       if (errors) {
         return setFormErrors(errors);
       } else {
-        setFormData(initialFormState);
-        setFormErrors(null);
         toast.success('Post created!', { autoClose: 2000 });
         navigate('/posts', { replace: true });
       }
     }
-  }, [response, initialFormState, navigate]);
+  }, [response, navigate]);
 
   return (
     <>
