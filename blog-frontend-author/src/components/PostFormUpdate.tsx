@@ -9,9 +9,9 @@ import {
 } from '../types/types';
 import { Editor } from '@tinymce/tinymce-react';
 import { Editor as TinyMCEEditor } from 'tinymce';
-
 import ErrorList from './ErrorList';
 import { toast } from 'react-toastify';
+import CustomButton from './CustomButton';
 
 const PostFormUpdate = ({
   setEdit,
@@ -153,22 +153,11 @@ const PostFormUpdate = ({
           <option value='true'>Yes</option>
         </select>
         <div className='flex my-2 items-center justify-between'>
-          <button
-            className='h-8 min-w-20 border-2 border-gray-500 border-solid rounded-md text-sm font-semibold cursor-pointer text-green-700 bg-white hover:bg-green-600 hover:text-white  focus:bg-green-700 focus:text-white'
-            type='submit'
-          >
-            Submit
-          </button>
-          <button
-            className='h-7 min-w-20 border-2 border-gray-500 border-solid rounded-md text-sm font-semibold cursor-pointer text-green-700 bg-white hover:bg-green-600 hover:text-white  focus:bg-green-700 focus:text-white'
-            type='submit'
-            onClick={() => setEdit(false)}
-          >
-            Cancel
-          </button>
+          <CustomButton type='submit' content='Submit' />
+          <CustomButton content='Cancel' onClick={() => setEdit(false)} />
         </div>
       </Form>
-      {formErrors ? <ErrorList errors={formErrors} /> : ''}
+      {formErrors && <ErrorList errors={formErrors} />}
     </>
   );
 };

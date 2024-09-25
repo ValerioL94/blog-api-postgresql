@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useActionData, useNavigate, useSubmit } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { TValidationErrors } from '../types/types';
+import CustomButton from './CustomButton';
 
 const ModalPrompt = ({
   setShowModal,
@@ -40,20 +41,8 @@ const ModalPrompt = ({
       >
         <p>Delete this post and all its comments?</p>
         <div className='flex w-full justify-evenly'>
-          <button
-            className='h-7 min-w-20 border-2 border-gray-500 border-solid rounded-md text-sm font-semibold cursor-pointer text-green-700 bg-white hover:bg-green-600 hover:text-white  focus:bg-green-700 focus:text-white'
-            type='button'
-            onClick={handleConfirm}
-          >
-            Confirm
-          </button>
-          <button
-            className='h-7 min-w-20 border-2 border-gray-500 border-solid rounded-md text-sm font-semibold cursor-pointer text-green-700 bg-white hover:bg-green-600 hover:text-white  focus:bg-green-700 focus:text-white'
-            type='button'
-            onClick={() => setShowModal(false)}
-          >
-            Cancel
-          </button>
+          <CustomButton onClick={handleConfirm} content='Confirm' />
+          <CustomButton onClick={() => setShowModal(false)} content='Cancel' />
         </div>
       </dialog>
     </div>

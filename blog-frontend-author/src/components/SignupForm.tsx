@@ -5,13 +5,13 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import ErrorList from './ErrorList';
 import { TValidationErrors } from '../types/types';
+import CustomButton from './CustomButton';
 
 const SignupForm = () => {
   const [formState, dispatch] = useReducer(signupReducer, initialFormState);
   const [formErrors, setFormErrors] = useState<TValidationErrors | null>(null);
   const response = useActionData();
   const navigate = useNavigate();
-
   useEffect(() => {
     if (response) {
       const { errors } = response as { errors: TValidationErrors };
@@ -29,7 +29,6 @@ const SignupForm = () => {
       }
     }
   }, [response, navigate]);
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
       type: 'HANDLE INPUT TEXT',
@@ -160,14 +159,9 @@ const SignupForm = () => {
           onChange={(e) => handleInputChange(e)}
           required
         />
-        <button
-          className='h-7 min-w-20 border-2 border-gray-500 border-solid rounded-md text-sm font-semibold cursor-pointer text-green-700 bg-white hover:bg-green-600 hover:text-white  focus:bg-green-700 focus:text-white'
-          type='submit'
-        >
-          Submit
-        </button>
+        <CustomButton type='submit' content='Submit' />
       </Form>
-      {formErrors ? <ErrorList errors={formErrors} /> : ''}
+      {formErrors && <ErrorList errors={formErrors} />}
     </>
   );
 };

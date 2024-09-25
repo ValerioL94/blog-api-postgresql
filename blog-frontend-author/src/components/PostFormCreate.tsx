@@ -4,9 +4,9 @@ import { useEffect, useMemo, useState } from 'react';
 import { TinyMCEEVent, TPostCreate, TValidationErrors } from '../types/types';
 import { Editor } from '@tinymce/tinymce-react';
 import { Editor as TinyMCEEditor } from 'tinymce';
-
 import ErrorList from './ErrorList';
 import { toast } from 'react-toastify';
+import CustomButton from './CustomButton';
 
 const PostFormCreate = () => {
   const { authData } = useAuth();
@@ -43,7 +43,6 @@ const PostFormCreate = () => {
       },
     };
   };
-
   useEffect(() => {
     if (response) {
       const { errors } = response as { errors: TValidationErrors };
@@ -55,7 +54,6 @@ const PostFormCreate = () => {
       }
     }
   }, [response, navigate]);
-
   return (
     <>
       <Form
@@ -142,14 +140,15 @@ const PostFormCreate = () => {
           <option value='false'>No</option>
           <option value='true'>Yes</option>
         </select>
-        <button
-          className='h-7 min-w-20 border-2 border-gray-500 border-solid rounded-md text-sm font-semibold cursor-pointer text-green-700 bg-white hover:bg-green-600 hover:text-white  focus:bg-green-700 focus:text-white'
-          type='submit'
-        >
-          Submit
-        </button>
+        <div className='flex justify-between'>
+          <CustomButton type='submit' content='Submit' />
+          <CustomButton
+            content='Reset'
+            onClick={() => setFormData(initialFormState)}
+          />
+        </div>
       </Form>
-      {formErrors ? <ErrorList errors={formErrors} /> : ''}
+      {formErrors && <ErrorList errors={formErrors} />}
     </>
   );
 };

@@ -5,12 +5,13 @@ import { toast } from 'react-toastify';
 import ErrorList from './ErrorList';
 import { useAuth } from '../provider/context';
 import { TAuthData, TValidationErrors } from '../types/types';
+import CustomButton from './CustomButton';
 
-const initialState = {
-  email: '',
-  password: '',
-};
 const LoginForm = () => {
+  const initialState = {
+    email: '',
+    password: '',
+  };
   const [formState, setFormState] = useState(initialState);
   const [showPassword, setShowPassword] = useState(false);
   const [formErrors, setFormErrors] = useState<TValidationErrors | null>(null);
@@ -37,7 +38,6 @@ const LoginForm = () => {
       }
     }
   }, [response, navigate, setAuthData]);
-
   return (
     <>
       <Form className='p-1' method='POST'>
@@ -77,14 +77,9 @@ const LoginForm = () => {
           autoComplete='current-password'
           required
         />
-        <button
-          className='h-7 min-w-20 border-2 border-gray-500 border-solid rounded-md text-sm font-semibold cursor-pointer text-green-700 bg-white hover:bg-green-600 hover:text-white  focus:bg-green-700 focus:text-white'
-          type='submit'
-        >
-          Submit
-        </button>
+        <CustomButton type='submit' content='Submit' />
       </Form>
-      {formErrors ? <ErrorList errors={formErrors} /> : ''}
+      {formErrors && <ErrorList errors={formErrors} />}
     </>
   );
 };
