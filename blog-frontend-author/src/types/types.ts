@@ -27,8 +27,8 @@ export type TSignupForm = {
 
 export type TSignupReducerAction = {
   type: string;
-  field: string;
-  payload: string;
+  field?: string;
+  payload?: string;
 };
 
 export type TValidationError = {
