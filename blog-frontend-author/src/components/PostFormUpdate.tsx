@@ -34,15 +34,15 @@ const PostFormUpdate = ({
   const submit = useSubmit();
   const [formData, setFormData] = useState(initialFormState);
   const [formErrors, setFormErrors] = useState<TValidationErrors | null>(null);
-  function handleChange(
+  const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | TinyMCEEVent
-  ) {
+  ) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
     });
-  }
+  };
   const parseEditorData = (content: string, editor: TinyMCEEditor) => {
     const { targetElm } = editor;
     const { id } = targetElm;
@@ -54,6 +54,14 @@ const PostFormUpdate = ({
     };
   };
 
+  const handleFormCancel = () => {
+    setEdit(false);
+    /*
+    without a full page reload the form keeps
+    showing eventual errors from previous submits
+    */
+    window.location.reload();
+  };
   useEffect(() => {
     if (response) {
       const { errors } = response as { errors: TValidationErrors };
@@ -83,7 +91,7 @@ const PostFormUpdate = ({
           id='title'
           className='block w-full py-1 px-2 mb-3 border-2 border-solid border-gray-500 rounded-md text-sm hover:border-green-600 focus:border-green-700 outline-none'
           value={formData.title}
-          onChange={handleChange}
+          onChange={handleInputChange}
           required
         />
         <label htmlFor='content'>Content: </label>
@@ -93,7 +101,7 @@ const PostFormUpdate = ({
           id='content'
           value={formData.content}
           onEditorChange={(content, editor) =>
-            handleChange(parseEditorData(content, editor))
+            handleInputChange(parseEditorData(content, editor))
           }
           init={{
             menubar: false,
@@ -146,7 +154,7 @@ const PostFormUpdate = ({
           id='published'
           className='block w-full py-1 px-2 mb-3 border-2 border-solid border-gray-500 rounded-md text-sm hover:border-green-600 focus:border-green-700 outline-none'
           value={formData.published}
-          onChange={handleChange}
+          onChange={handleInputChange}
           required
         >
           <option value='false'>No</option>
@@ -154,7 +162,7 @@ const PostFormUpdate = ({
         </select>
         <div className='flex my-2 items-center justify-between'>
           <CustomButton type='submit' content='Submit' />
-          <CustomButton content='Cancel' onClick={() => setEdit(false)} />
+          <CustomButton content='Cancel' onClick={handleFormCancel} />
         </div>
       </Form>
       {formErrors && <ErrorList errors={formErrors} />}
