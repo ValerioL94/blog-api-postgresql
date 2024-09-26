@@ -50,15 +50,14 @@ describe('login form tests', () => {
         <RouterProvider router={router} />
       </AuthContext.Provider>
     );
-    const emailInput = screen.getByRole('textbox', { name: /email/i });
-    const passwordInput = screen.getByLabelText('Password');
-    const submitButton = screen.getByRole('button', { name: /submit/i });
-    expect(emailInput).toBeInTheDocument();
-    expect(passwordInput).toBeInTheDocument();
-    expect(submitButton).toBeInTheDocument();
+
+    expect(screen.getByRole('textbox', { name: /email/i })).toBeInTheDocument();
+    expect(screen.getByLabelText('Password')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /reset/i })).toBeInTheDocument();
   });
   describe('form interactions', () => {
-    test('show error list when input data is wrong', async () => {
+    test('inputs are registered correctly', async () => {
       const testRoutes = createRoutesFromElements(
         <Route
           path='login'
@@ -77,16 +76,28 @@ describe('login form tests', () => {
       const emailInput = screen.getByRole('textbox', { name: /email/i });
       const passwordInput = screen.getByLabelText('Password');
       const submitButton = screen.getByRole('button', { name: /submit/i });
+      const resetButton = screen.getByRole('button', { name: /reset/i });
 
+      // Every field is filled correctly
       await user.type(emailInput, 'aaa@aaa');
-      await user.type(passwordInput, 'aaaaa');
-      await user.click(submitButton);
+      expect(emailInput).toHaveValue('aaa@aaa');
 
+      await user.type(passwordInput, 'aaaaa');
+      expect(passwordInput).toHaveValue('aaaaa');
+
+      // Show error list on submit button press
+      await user.click(submitButton);
       expect(
         await screen.findByRole('list', { name: /errorlist/i })
       ).toBeInTheDocument();
+
+      // Reset both error list and input fields on reset button press
+      await user.click(resetButton);
+      expect(screen.queryByRole('list', { name: /errorlist/i })).toBeNull();
+      expect(emailInput).toHaveValue('');
+      expect(passwordInput).toHaveValue('');
     });
-    test('log user and redirect to homepage when input data is correct', async () => {
+    test('log user and redirect to homepage if input data is correct', async () => {
       const testRoutes = createRoutesFromElements(
         <>
           <Route path='home' element={<HomePage />} />
@@ -113,10 +124,10 @@ describe('login form tests', () => {
       await user.type(passwordInput, 'Testpassword123@');
 
       await user.click(submitButton);
-
       expect(
         await screen.findByRole('heading', { name: /homepage/i })
       ).toBeInTheDocument();
+
       expect(await screen.findByText('testusername')).toBeInTheDocument();
     });
   });
