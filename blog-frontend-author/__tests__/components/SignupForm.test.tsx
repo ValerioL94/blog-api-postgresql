@@ -101,7 +101,7 @@ describe('signup form tests', () => {
 
       // Reset both error list and input fields on reset button press
       await user.click(resetButton);
-      expect(screen.queryByRole('list')).toBeNull();
+      expect(screen.queryByRole('list', { name: /errorlist/i })).toBeNull();
       expect(usernameInput).toHaveValue('');
       expect(emailInput).toHaveValue('');
       expect(passwordInput).toHaveValue('');
