@@ -1,6 +1,6 @@
 import { Form, useActionData, useNavigate, useSubmit } from 'react-router-dom';
 import { useAuth } from '../provider/context';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   TinyMCEEVent,
   TPostDetail,
@@ -21,14 +21,11 @@ const PostFormUpdate = ({
   postData: TPostDetail;
 }) => {
   const { authData } = useAuth();
-  const initialFormState: TPostUpdate = useMemo(
-    () => ({
-      title: postData.title,
-      content: postData.content,
-      published: postData.published.toString(),
-    }),
-    [postData]
-  );
+  const initialFormState: TPostUpdate = {
+    title: postData.title,
+    content: postData.content,
+    published: postData.published.toString(),
+  };
   const navigate = useNavigate();
   const response = useActionData();
   const submit = useSubmit();

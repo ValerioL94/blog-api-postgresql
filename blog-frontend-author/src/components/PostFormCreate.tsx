@@ -1,6 +1,6 @@
 import { Form, useActionData, useNavigate, useSubmit } from 'react-router-dom';
 import { useAuth } from '../provider/context';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TinyMCEEVent, TPostCreate, TValidationErrors } from '../types/types';
 import { Editor } from '@tinymce/tinymce-react';
 import { Editor as TinyMCEEditor } from 'tinymce';
@@ -10,15 +10,12 @@ import CustomButton from './CustomButton';
 
 const PostFormCreate = () => {
   const { authData } = useAuth();
-  const initialFormState: TPostCreate = useMemo(
-    () => ({
-      title: '',
-      content: '',
-      published: 'false',
-      authorId: authData!.user.id,
-    }),
-    [authData]
-  );
+  const initialFormState: TPostCreate = {
+    title: '',
+    content: '',
+    published: 'false',
+    authorId: authData!.user.id,
+  };
   const navigate = useNavigate();
   const response = useActionData();
   const submit = useSubmit();
