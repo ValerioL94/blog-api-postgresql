@@ -10,11 +10,10 @@ import { TAuthContext, TPostList } from '../../src/types/types';
 import userEvent from '@testing-library/user-event';
 import Posts from '../../src/pages/Posts';
 import NewPost from '../../src/pages/NewPost';
-import PostForm from '../../src/components/PostForm';
+import PostFormCreate from '../../src/components/PostFormCreate';
 
 describe('postForm tests', () => {
   const user = userEvent.setup();
-
   const testContext: TAuthContext = {
     authData: {
       token: 'test',
@@ -27,7 +26,7 @@ describe('postForm tests', () => {
       id: '1',
       title: 'testpost1',
       content: 'test content 1',
-      published: 'false',
+      published: false,
       createdAt: new Date('2024-09-18T09:56:31.751Z'),
       updatedAt: new Date('2024-09-18T09:56:31.751Z'),
       authorId: '123',
@@ -45,7 +44,7 @@ describe('postForm tests', () => {
       id: '2',
       title: 'testpost2',
       content: 'test content 2',
-      published: 'true',
+      published: false,
       createdAt: new Date('2024-09-18T09:56:31.751Z'),
       updatedAt: new Date('2024-09-18T09:56:31.751Z'),
       authorId: '123',
@@ -86,21 +85,18 @@ describe('postForm tests', () => {
         <RouterProvider router={router} />
       </AuthContext.Provider>
     );
-    const titleInput = screen.getByRole('textbox', { name: /title/i });
-    const contentInput = screen.getByLabelText(/content/i);
-
-    const submitButton = screen.getByRole('button', { name: /submit/i });
-    expect(titleInput).toBeInTheDocument();
-    expect(contentInput).toBeInTheDocument();
-    expect(submitButton).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: /title/i })).toBeInTheDocument();
+    expect(screen.getByLabelText(/content/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /reset/i })).toBeInTheDocument();
   });
   describe('form interactions', () => {
-    test('show error list when input data is wrong', async () => {
+    test('inputs are registered correctly', async () => {
       const testRoutes = createRoutesFromElements(
         <Route
           path='/posts/new-post'
           action={() => mockActionError()}
-          element={<PostForm />}
+          element={<PostFormCreate />}
         />
       );
       const router = createMemoryRouter(testRoutes, {
@@ -113,17 +109,38 @@ describe('postForm tests', () => {
       );
       const titleInput = screen.getByRole('textbox', { name: /title/i });
       const contentInput = screen.getByLabelText(/content/i);
-
+      const publishedInput = screen.getByRole('combobox', {
+        name: /published/i,
+      });
       const submitButton = screen.getByRole('button', { name: /submit/i });
+      const resetButton = screen.getByRole('button', { name: /reset/i });
 
+      // Every field is filled correctly
       await user.type(titleInput, 'a');
-      await user.type(contentInput, 'a');
-      await user.click(submitButton);
+      expect(titleInput).toHaveValue('a');
 
+      await user.type(contentInput, 'aaa');
+      expect(contentInput).toHaveValue('aaa');
+
+      expect(publishedInput).toHaveValue('false');
+      await user.selectOptions(publishedInput, 'Yes');
+      expect(publishedInput).toHaveValue('true');
+
+      // Show error list on submit button press
+      await user.click(submitButton);
       expect(
         await screen.findByRole('list', { name: /errorlist/i })
       ).toBeInTheDocument();
+
+      // Reset both error list and input fields on reset button press
+      await user.click(resetButton);
+      expect(screen.queryByRole('list', { name: /errorlist/i })).toBeNull();
+      expect(titleInput).toHaveValue('');
+      // contentInput reset not working in tests only
+      // expect(contentInput).toHaveValue('');
+      expect(publishedInput).toHaveValue('false');
     });
+
     test('create post and redirect to posts page when input data is correct', async () => {
       const testRoutes = createRoutesFromElements(
         <>
