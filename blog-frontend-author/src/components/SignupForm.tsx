@@ -35,6 +35,12 @@ const SignupForm = () => {
       type,
     });
   };
+  const handleFormReset = () => {
+    dispatch({
+      type: 'RESET FORM',
+    });
+    setFormErrors(null);
+  };
   return (
     <>
       <Form className='p-1' method='POST'>
@@ -153,14 +159,7 @@ const SignupForm = () => {
         />
         <div className='flex justify-between'>
           <CustomButton type='submit' content='Submit' />
-          <CustomButton
-            content='Reset'
-            onClick={() =>
-              dispatch({
-                type: 'RESET FORM',
-              })
-            }
-          />
+          <CustomButton content='Reset' onClick={handleFormReset} />
         </div>
       </Form>
       {formErrors && <ErrorList errors={formErrors} />}

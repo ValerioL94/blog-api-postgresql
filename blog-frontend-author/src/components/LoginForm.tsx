@@ -18,12 +18,16 @@ const LoginForm = () => {
   const { setAuthData } = useAuth();
   const response = useActionData();
   const navigate = useNavigate();
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormState({
       ...formState,
       [e.target.name]: e.target.value,
     });
-  }
+  };
+  const handleFormReset = () => {
+    setFormState(initialFormState);
+    setFormErrors(null);
+  };
   useEffect(() => {
     if (response) {
       const { errors } = response as { errors: TValidationErrors };
@@ -46,7 +50,7 @@ const LoginForm = () => {
           name='email'
           id='email'
           value={formState.email}
-          onChange={handleChange}
+          onChange={handleInputChange}
           placeholder='jake@gmail.com'
           autoComplete='email'
           required
@@ -71,16 +75,13 @@ const LoginForm = () => {
           name='password'
           id='password'
           value={formState.password}
-          onChange={handleChange}
+          onChange={handleInputChange}
           autoComplete='current-password'
           required
         />
         <div className='flex justify-between'>
           <CustomButton type='submit' content='Submit' />
-          <CustomButton
-            content='Reset'
-            onClick={() => setFormState(initialFormState)}
-          />
+          <CustomButton content='Reset' onClick={handleFormReset} />
         </div>
       </Form>
       {formErrors && <ErrorList errors={formErrors} />}
