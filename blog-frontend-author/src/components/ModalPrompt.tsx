@@ -36,11 +36,11 @@ const ModalPrompt = ({
       onClick={() => setShowModal(false)}
     >
       <dialog
-        className='absolute flex flex-col gap-2 items-center justify-center w-11/12 max-w-72 h-28 p-4 bg-white rounded-xl shadow-xl shadow-gray-500 transition-all duration-500 z-10'
+        className='absolute flex flex-col gap-2 items-center justify-center w-full max-w-72 h-28 p-4 bg-white rounded-xl shadow-xl shadow-gray-500 transition-all duration-500 z-10'
         onClick={(e) => e.stopPropagation()}
       >
         <p>Delete this post and all its comments?</p>
-        <div className='flex w-full justify-evenly'>
+        <div className='flex w-full justify-between px-2'>
           <CustomButton onClick={handleConfirm} content='Confirm' />
           <CustomButton onClick={() => setShowModal(false)} content='Cancel' />
         </div>

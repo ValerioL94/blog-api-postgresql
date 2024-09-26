@@ -19,7 +19,7 @@ export const signupReducer = (
     case 'HANDLE INPUT TEXT':
       return {
         ...state,
-        [action.field]: action.payload,
+        [action.field!]: action.payload,
       };
     case 'HANDLE SHOW PASSWORD':
       return { ...state, showPassword: !state.showPassword };

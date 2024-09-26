@@ -8,11 +8,11 @@ import { TAuthData, TValidationErrors } from '../types/types';
 import CustomButton from './CustomButton';
 
 const LoginForm = () => {
-  const initialState = {
+  const initialFormState = {
     email: '',
     password: '',
   };
-  const [formState, setFormState] = useState(initialState);
+  const [formState, setFormState] = useState(initialFormState);
   const [showPassword, setShowPassword] = useState(false);
   const [formErrors, setFormErrors] = useState<TValidationErrors | null>(null);
   const { setAuthData } = useAuth();
@@ -31,8 +31,6 @@ const LoginForm = () => {
         return setFormErrors(errors);
       } else {
         toast.success('Login successful!', { autoClose: 2000 });
-        setFormState(initialState);
-        setFormErrors(null);
         setAuthData(response as TAuthData);
         navigate('/home', { replace: true });
       }
@@ -77,7 +75,13 @@ const LoginForm = () => {
           autoComplete='current-password'
           required
         />
-        <CustomButton type='submit' content='Submit' />
+        <div className='flex justify-between'>
+          <CustomButton type='submit' content='Submit' />
+          <CustomButton
+            content='Reset'
+            onClick={() => setFormState(initialFormState)}
+          />
+        </div>
       </Form>
       {formErrors && <ErrorList errors={formErrors} />}
     </>

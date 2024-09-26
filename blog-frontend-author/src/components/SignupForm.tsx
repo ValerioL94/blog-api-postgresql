@@ -18,12 +18,6 @@ const SignupForm = () => {
       if (errors) {
         return setFormErrors(errors);
       } else {
-        dispatch({
-          type: 'RESET FORM',
-          field: '',
-          payload: '',
-        });
-        setFormErrors(null);
         toast.success('Signup successful!', { autoClose: 2000 });
         navigate('/login', { replace: true });
       }
@@ -39,8 +33,6 @@ const SignupForm = () => {
   const handleInputShow = (type: string) => {
     dispatch({
       type,
-      field: '',
-      payload: '',
     });
   };
   return (
@@ -59,7 +51,7 @@ const SignupForm = () => {
           name='username'
           id='username'
           value={formState.username}
-          onChange={(e) => handleInputChange(e)}
+          onChange={handleInputChange}
           placeholder='JakeTheAuthor'
           autoComplete='username'
           required
@@ -71,7 +63,7 @@ const SignupForm = () => {
           name='email'
           id='email'
           value={formState.email}
-          onChange={(e) => handleInputChange(e)}
+          onChange={handleInputChange}
           placeholder='jake@gmail.com'
           autoComplete='email'
           required
@@ -102,7 +94,7 @@ const SignupForm = () => {
           name='password'
           id='password'
           value={formState.password}
-          onChange={(e) => handleInputChange(e)}
+          onChange={handleInputChange}
           autoComplete='new-password'
           required
         />
@@ -126,7 +118,7 @@ const SignupForm = () => {
           name='confirm'
           id='confirm'
           value={formState.confirm}
-          onChange={(e) => handleInputChange(e)}
+          onChange={handleInputChange}
           autoComplete='new-password'
           required
         />
@@ -156,10 +148,20 @@ const SignupForm = () => {
           name='authorKey'
           id='authorKey'
           value={formState.authorKey}
-          onChange={(e) => handleInputChange(e)}
+          onChange={handleInputChange}
           required
         />
-        <CustomButton type='submit' content='Submit' />
+        <div className='flex justify-between'>
+          <CustomButton type='submit' content='Submit' />
+          <CustomButton
+            content='Reset'
+            onClick={() =>
+              dispatch({
+                type: 'RESET FORM',
+              })
+            }
+          />
+        </div>
       </Form>
       {formErrors && <ErrorList errors={formErrors} />}
     </>
