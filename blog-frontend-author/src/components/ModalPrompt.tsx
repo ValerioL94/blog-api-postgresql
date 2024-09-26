@@ -16,15 +16,13 @@ const ModalPrompt = ({
   const submit = useSubmit();
   const navigate = useNavigate();
   const response = useActionData();
-  function handleConfirm() {
+  const handleConfirm = () => {
     submit({ id: postId, token: token }, { method: 'DELETE' });
-  }
+  };
   useEffect(() => {
     if (response) {
       const { errors } = response as { errors: TValidationErrors };
-      if (errors) {
-        throw new Error('Something went wrong');
-      } else {
+      if (!errors) {
         toast.success('Post deleted!', { autoClose: 2000 });
         navigate('/posts', { replace: true });
       }
