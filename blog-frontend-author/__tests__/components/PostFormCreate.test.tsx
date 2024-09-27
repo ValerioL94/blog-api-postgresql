@@ -87,6 +87,9 @@ describe('postForm tests', () => {
     );
     expect(screen.getByRole('textbox', { name: /title/i })).toBeInTheDocument();
     expect(screen.getByLabelText(/content/i)).toBeInTheDocument();
+    expect(
+      screen.getByRole('combobox', { name: /published/i })
+    ).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /reset/i })).toBeInTheDocument();
   });
