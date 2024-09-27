@@ -50,14 +50,13 @@ const PostFormUpdate = ({
       },
     };
   };
-
   const handleFormCancel = () => {
     setEdit(false);
     /*
-    without a full page reload the form keeps
+    without a page reload the form keeps
     showing eventual errors from previous submits
     */
-    window.location.reload();
+    navigate(0);
   };
   useEffect(() => {
     if (response) {
