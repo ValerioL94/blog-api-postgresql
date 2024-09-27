@@ -33,7 +33,7 @@ const ModalPrompt = ({
       className='box-border fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-green-900 bg-opacity-30 backdrop-blur-sm animate-fade-in'
       onClick={() => setShowModal(false)}
     >
-      <dialog
+      <div
         className='absolute flex flex-col gap-2 items-center justify-center w-full max-w-72 h-28 p-4 bg-white rounded-xl shadow-xl shadow-gray-500 transition-all duration-500 z-10'
         onClick={(e) => e.stopPropagation()}
       >
@@ -42,7 +42,7 @@ const ModalPrompt = ({
           <CustomButton onClick={handleConfirm} content='Confirm' />
           <CustomButton onClick={() => setShowModal(false)} content='Cancel' />
         </div>
-      </dialog>
+      </div>
     </div>
   );
 };
