@@ -36,8 +36,8 @@ describe('postForm tests', () => {
       },
     },
   ];
-  function getPosts(postsList: TPostList) {
-    return { posts: postsList };
+  function getPosts() {
+    return { posts: mockPostsList };
   }
   function mockActionSuccess() {
     const newPost = {
@@ -65,11 +65,7 @@ describe('postForm tests', () => {
   test('form rendering', async () => {
     const testRoutes = createRoutesFromElements(
       <>
-        <Route
-          path='/posts'
-          loader={() => getPosts(mockPostsList)}
-          element={<Posts />}
-        />
+        <Route path='/posts' loader={() => getPosts()} element={<Posts />} />
         <Route
           path='/posts/new-post'
           element={<NewPost />}
@@ -147,11 +143,7 @@ describe('postForm tests', () => {
     test('create post and redirect to posts page when input data is correct', async () => {
       const testRoutes = createRoutesFromElements(
         <>
-          <Route
-            path='/posts'
-            loader={() => getPosts(mockPostsList)}
-            element={<Posts />}
-          />
+          <Route path='/posts' loader={() => getPosts()} element={<Posts />} />
           <Route
             path='/posts/new-post'
             element={<NewPost />}
