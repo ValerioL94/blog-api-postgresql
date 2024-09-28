@@ -33,7 +33,7 @@ describe('post page test', () => {
       id: '1',
       title: 'testpost1',
       content: 'test content 1',
-      published: 'false',
+      published: false,
       createdAt: new Date('2024-09-18T09:56:31.751Z'),
       updatedAt: new Date('2024-09-18T09:56:31.751Z'),
       authorId: '123',
@@ -46,7 +46,7 @@ describe('post page test', () => {
       id: '2',
       title: 'testpost2',
       content: 'test content 2',
-      published: 'false',
+      published: false,
       createdAt: new Date('2024-09-18T09:56:31.751Z'),
       updatedAt: new Date('2024-09-18T09:56:31.751Z'),
       authorId: '123',
@@ -56,13 +56,18 @@ describe('post page test', () => {
       },
     },
   ];
+  function getPosts() {
+    return { posts: testPosts };
+  }
   const noPosts: TPostList = [];
-
+  function getNoPosts() {
+    return { posts: noPosts };
+  }
   const postDetail: TPostDetail = {
     id: '1',
     title: 'testpost1',
     content: 'test content 1',
-    published: 'false',
+    published: false,
     createdAt: new Date('2024-09-18T09:56:31.751Z'),
     updatedAt: new Date('2024-09-18T09:56:31.751Z'),
     authorId: '123',
@@ -72,17 +77,13 @@ describe('post page test', () => {
     },
     comments: [],
   };
-
+  function getPost() {
+    return { post: postDetail };
+  }
   describe('posts page conditional rendering', () => {
     test('render posts page if user is authenticated', async () => {
       const testRoutes = createRoutesFromElements(
-        <Route
-          path='/posts'
-          loader={() => {
-            return { posts: noPosts };
-          }}
-          element={<Posts />}
-        />
+        <Route path='/posts' loader={() => getNoPosts()} element={<Posts />} />
       );
       const router = createMemoryRouter(testRoutes, {
         initialEntries: ['/posts'],
@@ -92,7 +93,6 @@ describe('post page test', () => {
           <RouterProvider router={router} />
         </AuthContext.Provider>
       );
-
       expect(
         await screen.findByRole('heading', { name: 'Posts' })
       ).toBeInTheDocument();
@@ -104,9 +104,7 @@ describe('post page test', () => {
           <Route path='posts' element={<ProtectedRoute />}>
             <Route
               path='/posts'
-              loader={() => {
-                return { posts: noPosts };
-              }}
+              loader={() => getNoPosts()}
               element={<Posts />}
             />
           </Route>
@@ -128,13 +126,7 @@ describe('post page test', () => {
   describe('posts page content rendering', () => {
     test('show no post message if there are no posts available', async () => {
       const testRoutes = createRoutesFromElements(
-        <Route
-          path='/posts'
-          loader={() => {
-            return { posts: noPosts };
-          }}
-          element={<Posts />}
-        />
+        <Route path='/posts' loader={() => getNoPosts()} element={<Posts />} />
       );
       const router = createMemoryRouter(testRoutes, {
         initialEntries: ['/posts'],
@@ -150,13 +142,7 @@ describe('post page test', () => {
     });
     test('show post preview for each post available', async () => {
       const testRoutes = createRoutesFromElements(
-        <Route
-          path='/posts'
-          loader={() => {
-            return { posts: testPosts };
-          }}
-          element={<Posts />}
-        />
+        <Route path='/posts' loader={() => getPosts()} element={<Posts />} />
       );
       const router = createMemoryRouter(testRoutes, {
         initialEntries: ['/posts'],
@@ -174,20 +160,12 @@ describe('post page test', () => {
     const user = userEvent.setup();
     const testRoutes = createRoutesFromElements(
       <>
-        <Route
-          path='/posts'
-          loader={() => {
-            return { posts: testPosts };
-          }}
-          element={<Posts />}
-        />
+        <Route path='/posts' loader={() => getPosts()} element={<Posts />} />
         <Route path='/posts/new-post' element={<NewPost />} />
         <Route
           path='/posts/:postId'
           element={<Post />}
-          loader={() => {
-            return { post: postDetail };
-          }}
+          loader={() => getPost()}
         />
       </>
     );
