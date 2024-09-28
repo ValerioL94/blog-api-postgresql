@@ -1,18 +1,19 @@
 import { createRoutesFromElements, redirect, Route } from 'react-router-dom';
+import GlobalLayout from './components/GlobalLayout';
+import HomePage from './pages/HomePage';
 import About from './pages/About';
 import ErrorPage from './pages/ErrorPage';
-import HomePage from './pages/HomePage';
+import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Logout from './pages/Logout';
+import ProtectedRoute from './pages/ProtectedRoute';
+import Posts from './pages/Posts';
 import NewPost from './pages/NewPost';
 import Post from './pages/Post';
-import Posts from './pages/Posts';
-import ProtectedRoute from './pages/ProtectedRoute';
-import Signup from './pages/Signup';
-import GlobalLayout from './components/GlobalLayout';
-import { postLoader, postsLoader } from './loaders/postLoader';
+import CommentList from './pages/CommentList';
 import { userAction } from './actions/userActions';
 import { postAction } from './actions/postActions';
+import { postLoader, postListLoader } from './loaders/postLoader';
 
 export const routes = createRoutesFromElements(
   <Route path='/' errorElement={<ErrorPage />} element={<GlobalLayout />}>
@@ -33,7 +34,7 @@ export const routes = createRoutesFromElements(
     <Route path='posts' element={<ProtectedRoute />}>
       <Route
         index
-        loader={async () => await postsLoader()}
+        loader={async () => await postListLoader()}
         element={<Posts />}
       />
       <Route
@@ -50,6 +51,11 @@ export const routes = createRoutesFromElements(
         action={async ({ request, params }) =>
           await postAction(request, params)
         }
+      />
+      <Route
+        path=':postId/comments'
+        element={<CommentList />}
+        loader={async ({ params }) => await postLoader(params)}
       />
     </Route>
   </Route>
