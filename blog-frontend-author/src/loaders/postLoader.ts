@@ -8,7 +8,7 @@ async function getRequest(url: string) {
   }
   return response.json();
 }
-export async function postsLoader() {
+export async function postListLoader() {
   const posts: TPostList = await getRequest('/api/posts');
   return posts;
 }
