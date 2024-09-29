@@ -3,8 +3,8 @@ import { useAuth } from '../provider/context';
 import CustomButton from './CustomButton';
 import { TPostDetail } from '../types/types';
 import { useState } from 'react';
-import ModalPrompt from './ModalPrompt';
 import { Link } from 'react-router-dom';
+import PostDeleteModal from './PostDeleteModal';
 
 const PostDetail = ({
   setEdit,
@@ -54,7 +54,7 @@ const PostDetail = ({
               onClick={() => setShowModal(!showModal)}
             />
             {showModal && (
-              <ModalPrompt
+              <PostDeleteModal
                 setShowModal={setShowModal}
                 postId={postData.id}
                 token={authData!.token}
@@ -77,7 +77,9 @@ const PostDetail = ({
         )}
       </div>
       <div className='flex items-center justify-between'>
-        <Link to={'comments'}>Go to post's comments</Link>
+        <Link to={'comments'} state={{ postTitle: postData.title }}>
+          Go to post's comments
+        </Link>
         <CustomButton
           title='Go to top'
           content={'Top'}
