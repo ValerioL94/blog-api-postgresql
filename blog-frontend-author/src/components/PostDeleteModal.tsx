@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { TValidationErrors } from '../types/types';
 import CustomButton from './CustomButton';
 
-const ModalPrompt = ({
+const PostDeleteModal = ({
   setShowModal,
   postId,
   token,
@@ -49,4 +49,4 @@ const ModalPrompt = ({
   );
 };
 
-export default ModalPrompt;
+export default PostDeleteModal;
