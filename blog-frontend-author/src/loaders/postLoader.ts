@@ -1,5 +1,5 @@
 import { Params } from 'react-router-dom';
-import { TPostList } from '../types/types';
+import { TPostDetail, TPostList } from '../types/types';
 
 async function getRequest(url: string) {
   const response = await fetch(url);
@@ -14,6 +14,6 @@ export async function postListLoader() {
 }
 
 export async function postLoader(params: Params) {
-  const post = await getRequest(`/api/posts/${params.postId}`);
+  const post: TPostDetail = await getRequest(`/api/posts/${params.postId}`);
   return post;
 }
