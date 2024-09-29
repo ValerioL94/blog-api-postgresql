@@ -24,8 +24,10 @@ const ModalPrompt = ({
       const { errors } = response as { errors: TValidationErrors };
       if (!errors) {
         toast.success('Post deleted!', { autoClose: 2000 });
-        navigate('/posts', { replace: true });
+      } else {
+        toast.error('Operation aborted!', { autoClose: 2000 });
       }
+      navigate('/posts', { replace: true });
     }
   }, [response, navigate]);
   return (
