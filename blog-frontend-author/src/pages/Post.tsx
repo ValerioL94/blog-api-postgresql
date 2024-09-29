@@ -19,7 +19,7 @@ const Post = () => {
           </div>
         </div>
       ) : (
-        <div className='flex flex-col gap-2 p-4 w-full max-w-3xl rounded bg-white shadow-md shadow-gray-500'>
+        <div className='flex flex-col gap-2 p-4 w-full max-w-3xl rounded bg-white shadow-md shadow-gray-500 break-words'>
           <PostDetail setEdit={setEdit} postData={post} />
         </div>
       )}

@@ -4,7 +4,7 @@ import { TPostPreview } from '../types/types';
 const PostPreview = ({ postData }: { postData: TPostPreview }) => {
   return (
     <>
-      <div key={postData.id} className='p-1'>
+      <div key={postData.id} className='p-1 break-words'>
         <h2>
           <Link to={postData.id}>
             <strong>{postData.title}</strong>
