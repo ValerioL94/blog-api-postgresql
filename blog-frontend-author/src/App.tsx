@@ -10,10 +10,13 @@ import ProtectedRoute from './pages/ProtectedRoute';
 import Posts from './pages/Posts';
 import NewPost from './pages/NewPost';
 import Post from './pages/Post';
-import CommentList from './pages/CommentList';
+import Comments from './pages/Comments';
 import { userAction } from './actions/userActions';
-import { postAction } from './actions/postActions';
 import { postLoader, postListLoader } from './loaders/postLoader';
+import { postAction } from './actions/postActions';
+import { commentListLoader, commentLoader } from './loaders/commentLoader';
+import { commentAction } from './actions/commentActions';
+import Comment from './pages/Comment';
 
 export const routes = createRoutesFromElements(
   <Route path='/' errorElement={<ErrorPage />} element={<GlobalLayout />}>
@@ -54,8 +57,19 @@ export const routes = createRoutesFromElements(
       />
       <Route
         path=':postId/comments'
-        element={<CommentList />}
-        loader={async ({ params }) => await postLoader(params)}
+        element={<Comments />}
+        loader={async ({ params }) => await commentListLoader(params)}
+        action={async ({ request, params }) =>
+          await commentAction(request, params)
+        }
+      />
+      <Route
+        path=':postId/comments/:commentId'
+        element={<Comment />}
+        loader={async ({ params }) => await commentLoader(params)}
+        action={async ({ request, params }) =>
+          await commentAction(request, params)
+        }
       />
     </Route>
   </Route>
