@@ -56,6 +56,15 @@ describe('comment router tests', () => {
       token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: 600 });
     }
   });
+  describe('GET / ', () => {
+    it('should return all comments of specified post', async () => {
+      const res = await request(app)
+        .get('/')
+        .expect('Content-Type', /json/)
+        .expect(200);
+      expect(res.body.comments).toBeDefined();
+    });
+  });
   describe('POST / success', () => {
     it('should create a comment and return success message', async () => {
       const res = await request(app)
@@ -89,6 +98,15 @@ describe('comment router tests', () => {
       expect(res.body.errors[0].message).toEqual(
         'Content must contain at least 10 characters'
       );
+    });
+  });
+  describe('GET /:commentId ', () => {
+    it('should return the specified comment', async () => {
+      const res = await request(app)
+        .get(`/${testCommentId}`)
+        .expect('Content-Type', /json/)
+        .expect(200);
+      expect(res.body.comment).toBeDefined();
     });
   });
   describe('PUT /:commentId success', () => {
