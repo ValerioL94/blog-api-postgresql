@@ -72,6 +72,9 @@ export type TCommentDetail = {
   createdAt: Date;
   updatedAt: Date;
   postId: string;
+  post: {
+    title: string;
+  };
 };
 
 export type TCommentList = TCommentDetail[];
