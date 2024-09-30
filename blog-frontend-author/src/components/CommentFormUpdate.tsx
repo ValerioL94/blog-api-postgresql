@@ -82,12 +82,14 @@ const CommentFormUpdate = ({
           placeholder='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque hendrerit efficitur lacus nec fermentum. Sed nisl mauris, dapibus aliquam leo at, efficitur blandit diam.'
           required
         ></textarea>
-        <CustomButton type='submit' content='Submit' />
-        <CustomButton
-          type='button'
-          content='Cancel'
-          onClick={handleFormCancel}
-        />
+        <div className='flex my-2 items-center justify-between'>
+          <CustomButton type='submit' content='Submit' />
+          <CustomButton
+            type='button'
+            content='Cancel'
+            onClick={handleFormCancel}
+          />
+        </div>
       </Form>
       {formErrors && <ErrorList errors={formErrors} />}
     </>
