@@ -12,7 +12,7 @@ import Posts from '../../src/pages/Posts';
 import NewPost from '../../src/pages/NewPost';
 import PostFormCreate from '../../src/components/PostFormCreate';
 
-describe('postForm tests', () => {
+describe('postFormCreate tests', () => {
   const user = userEvent.setup();
   const testContext: TAuthContext = {
     authData: {
