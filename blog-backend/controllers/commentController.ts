@@ -48,8 +48,8 @@ export const comment_update = asyncHandler(async (req, res, next) => {
       where: { id: req.params.commentId },
       data: parsedData,
     });
+    res.json({ message: 'Comment updated successfully' });
   }
-  res.json({ message: 'Comment updated successfully' });
 });
 
 export const comment_delete = asyncHandler(async (req, res, next) => {
