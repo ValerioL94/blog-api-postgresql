@@ -11,7 +11,7 @@ import userEvent from '@testing-library/user-event';
 import Post from '../../src/pages/Post';
 import Posts from '../../src/pages/Posts';
 
-describe('modalPrompt tests', () => {
+describe('postDeleteModal tests', () => {
   const user = userEvent.setup();
   const testContext: TAuthContext = {
     authData: {
@@ -20,7 +20,6 @@ describe('modalPrompt tests', () => {
     },
     setAuthData: () => {},
   };
-
   const postDetail: TPostDetail = {
     id: '1',
     title: 'testpost1',
@@ -35,16 +34,16 @@ describe('modalPrompt tests', () => {
     },
     comments: [],
   };
-  const mockPostsList: TPostList = [postDetail];
+  const postsList: TPostList = [postDetail];
   function getPosts() {
-    return { posts: mockPostsList };
+    return { posts: postsList };
   }
 
   function getPost() {
     return { post: postDetail };
   }
   function deletePost() {
-    mockPostsList.shift();
+    postsList.shift();
   }
   function mockActionSuccess() {
     deletePost();
