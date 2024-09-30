@@ -16,7 +16,7 @@ import ProtectedRoute from '../../src/pages/ProtectedRoute';
 import Post from '../../src/pages/Post';
 import NewPost from '../../src/pages/NewPost';
 
-describe('post page test', () => {
+describe('posts page test', () => {
   const testContext: TAuthContext = {
     authData: {
       token: 'test',
