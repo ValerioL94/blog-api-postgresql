@@ -53,8 +53,10 @@ const PostFormUpdate = ({
   const handleFormCancel = () => {
     // without a page reload the form keeps
     // showing eventual errors from previous submits
-    if (formErrors) navigate(0);
-    else setEdit(false);
+    if (formErrors) {
+      setEdit(false);
+      navigate(0);
+    } else setEdit(false);
   };
   useEffect(() => {
     if (response) {
