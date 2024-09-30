@@ -11,6 +11,7 @@ import userEvent from '@testing-library/user-event';
 import { AuthContext } from '../../src/provider/context';
 import { TAuthContext, TPostDetail } from '../../src/types/types';
 import Post from '../../src/pages/Post';
+import Comments from '../../src/pages/Comments';
 
 describe('postDetail tests', () => {
   const user = userEvent.setup();
@@ -42,7 +43,9 @@ describe('postDetail tests', () => {
     },
     comments: [],
   };
-
+  function getNoComments() {
+    return { comments: postDetail.comments };
+  }
   function getPost() {
     return { post: postDetail };
   }
@@ -54,6 +57,11 @@ describe('postDetail tests', () => {
             path='/posts/:postId'
             element={<Post />}
             loader={() => getPost()}
+          />
+          <Route
+            path='/posts/:postId/comments'
+            element={<Comments />}
+            loader={() => getNoComments()}
           />
         </>
       );
@@ -77,7 +85,16 @@ describe('postDetail tests', () => {
       expect(screen.getByText('9/18/2024, 11:59:31 AM')).toBeInTheDocument();
       expect(screen.getByRole('button', { name: /edit/i })).toBeInTheDocument();
       expect(screen.getByRole('button', { name: /delete/i })).toBeEnabled();
-      expect(screen.getByRole('button', { name: /top/i })).toBeEnabled();
+      expect(
+        screen.getByRole('link', { name: /comments/i })
+      ).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /top/i })).toBeInTheDocument();
+    });
+    test('comments page navigation', async () => {
+      await user.click(await screen.findByRole('link', { name: /comments/i }));
+      expect(
+        await screen.findByRole('heading', { name: /testpost1 - comments/i })
+      ).toBeInTheDocument();
     });
     test('edit button is enabled and renders edit post form', async () => {
       await user.click(await screen.findByRole('button', { name: /edit/i }));
