@@ -11,7 +11,7 @@ import userEvent from '@testing-library/user-event';
 import Post from '../../src/pages/Post';
 import Posts from '../../src/pages/Posts';
 
-describe('postForm tests', () => {
+describe('postFormUpdate tests', () => {
   const user = userEvent.setup();
   const testContext: TAuthContext = {
     authData: {
