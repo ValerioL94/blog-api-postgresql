@@ -96,6 +96,12 @@ describe('posts page test', () => {
       expect(
         await screen.findByRole('heading', { name: 'Posts' })
       ).toBeInTheDocument();
+      expect(
+        await screen.findByRole('link', { name: /new post/i })
+      ).toBeInTheDocument();
+      expect(
+        await screen.findByRole('button', { name: /top/i })
+      ).toBeInTheDocument();
     });
     test('render homepage if user is not authenticated', async () => {
       const testRoutes = createRoutesFromElements(
