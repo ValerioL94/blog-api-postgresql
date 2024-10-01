@@ -14,7 +14,7 @@ import Comments from './pages/Comments';
 import { userAction } from './actions/userActions';
 import { postLoader, postListLoader } from './loaders/postLoader';
 import { postAction } from './actions/postActions';
-import { commentListLoader, commentLoader } from './loaders/commentLoader';
+import { commentLoader } from './loaders/commentLoader';
 import { commentAction } from './actions/commentActions';
 import Comment from './pages/Comment';
 
@@ -58,7 +58,7 @@ export const routes = createRoutesFromElements(
       <Route
         path=':postId/comments'
         element={<Comments />}
-        loader={async ({ params }) => await commentListLoader(params)}
+        loader={async ({ params }) => await postLoader(params)}
         action={async ({ request, params }) =>
           await commentAction(request, params)
         }
