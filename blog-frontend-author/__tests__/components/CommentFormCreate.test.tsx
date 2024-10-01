@@ -8,7 +8,7 @@ import {
 import {
   TAuthContext,
   TCommentDetail,
-  TCommentList,
+  TPostDetail,
 } from '../../src/types/types';
 import Comments from '../../src/pages/Comments';
 import { AuthContext } from '../../src/provider/context';
@@ -34,9 +34,22 @@ describe('CommentFormCreate tests', () => {
       title: 'testpost1',
     },
   };
-  const commentList: TCommentList = [comment1];
-  function getComments() {
-    return { comments: commentList };
+  const postDetail: TPostDetail = {
+    id: '1',
+    title: 'testpost1',
+    content: 'test content 1',
+    published: false,
+    createdAt: new Date('2024-09-18T09:56:31.751Z'),
+    updatedAt: new Date('2024-09-18T09:59:31.751Z'),
+    authorId: '123',
+    author: {
+      username: 'testUser',
+      email: 'testemail@gmail.com',
+    },
+    comments: [comment1],
+  };
+  function getPostWithComments() {
+    return { post: postDetail };
   }
   function mockActionError() {
     const response = { errors: [{ message: 'error' }, { message: 'error2' }] };
@@ -54,7 +67,7 @@ describe('CommentFormCreate tests', () => {
         title: 'testpost1',
       },
     };
-    commentList.push(comment2);
+    postDetail.comments = [comment1, comment2];
     const response = 'Comment created!';
     return response;
   }
@@ -62,7 +75,7 @@ describe('CommentFormCreate tests', () => {
     const testRoutes = createRoutesFromElements(
       <Route
         path={`/posts/1/comments`}
-        loader={() => getComments()}
+        loader={() => getPostWithComments()}
         action={() => mockActionError()}
         element={<Comments />}
       />
@@ -86,7 +99,7 @@ describe('CommentFormCreate tests', () => {
       const testRoutes = createRoutesFromElements(
         <Route
           path={`/posts/1/comments`}
-          loader={() => getComments()}
+          loader={() => getPostWithComments()}
           action={() => mockActionError()}
           element={<Comments />}
         />
@@ -119,7 +132,7 @@ describe('CommentFormCreate tests', () => {
       const testRoutes = createRoutesFromElements(
         <Route
           path={`/posts/1/comments`}
-          loader={() => getComments()}
+          loader={() => getPostWithComments()}
           action={() => mockActionSuccess()}
           element={<Comments />}
         />

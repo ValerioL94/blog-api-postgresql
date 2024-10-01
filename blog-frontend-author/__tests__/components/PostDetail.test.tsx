@@ -43,8 +43,8 @@ describe('postDetail tests', () => {
     },
     comments: [],
   };
-  function getNoComments() {
-    return { comments: postDetail.comments };
+  function getPostWithNoComments() {
+    return { post: postDetail };
   }
   function getPost() {
     return { post: postDetail };
@@ -61,7 +61,7 @@ describe('postDetail tests', () => {
           <Route
             path='/posts/:postId/comments'
             element={<Comments />}
-            loader={() => getNoComments()}
+            loader={() => getPostWithNoComments()}
           />
         </>
       );

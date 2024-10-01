@@ -10,7 +10,7 @@ import { AuthContext } from '../../src/provider/context';
 import {
   TAuthContext,
   TCommentDetail,
-  TCommentList,
+  TPostDetail,
 } from '../../src/types/types';
 import Comment from '../../src/pages/Comment';
 import Comments from '../../src/pages/Comments';
@@ -37,9 +37,22 @@ describe('commentPreview tests', () => {
       title: 'testpost1',
     },
   };
-  const commentList: TCommentList = [comment1];
-  function getComments() {
-    return { comments: commentList };
+  const postDetail: TPostDetail = {
+    id: '1',
+    title: 'testpost1',
+    content: 'test content 1',
+    published: false,
+    createdAt: new Date('2024-09-18T09:56:31.751Z'),
+    updatedAt: new Date('2024-09-18T09:59:31.751Z'),
+    authorId: '123',
+    author: {
+      username: 'testUser',
+      email: 'testemail@gmail.com',
+    },
+    comments: [comment1],
+  };
+  function getPostWithComments() {
+    return { post: postDetail };
   }
   function getComment() {
     return { comment: comment1 };
@@ -49,7 +62,7 @@ describe('commentPreview tests', () => {
       <>
         <Route
           path={`/posts/:postId/comments`}
-          loader={() => getComments()}
+          loader={() => getPostWithComments()}
           element={<Comments />}
         />
         <Route
