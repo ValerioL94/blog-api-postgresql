@@ -77,9 +77,7 @@ const PostDetail = ({
         )}
       </div>
       <div className='flex items-center justify-between'>
-        <Link to={'comments'} state={{ postTitle: postData.title }}>
-          Go to post's comments
-        </Link>
+        <Link to={'comments'}>Go to post's comments</Link>
         <CustomButton
           title='Go to top'
           content={'Top'}
