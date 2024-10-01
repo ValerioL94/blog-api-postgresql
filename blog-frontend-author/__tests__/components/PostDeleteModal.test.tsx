@@ -47,7 +47,7 @@ describe('postDeleteModal tests', () => {
   }
   function mockActionSuccess() {
     deletePost();
-    const response = 'post updated';
+    const response = 'post deleted';
     return response;
   }
   beforeEach(async () => {
