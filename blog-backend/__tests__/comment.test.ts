@@ -56,15 +56,6 @@ describe('comment router tests', () => {
       token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: 600 });
     }
   });
-  describe('GET / ', () => {
-    it('should return all comments of specified post', async () => {
-      const res = await request(app)
-        .get('/')
-        .expect('Content-Type', /json/)
-        .expect(200);
-      expect(res.body.comments).toBeDefined();
-    });
-  });
   describe('POST / success', () => {
     it('should create a comment and return success message', async () => {
       const res = await request(app)

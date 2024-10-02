@@ -4,15 +4,6 @@ import { CommentSchema } from '../utils/zodSchema';
 import { fromZodError } from 'zod-validation-error';
 import { prisma } from '../prisma/client';
 
-export const comment_list = asyncHandler(async (req, res, next) => {
-  const comments = await prisma.comment.findMany({
-    where: { postId: req.params.postId },
-    include: { post: { select: { title: true } } },
-    orderBy: { createdAt: 'asc' },
-  });
-  res.json({ comments });
-});
-
 export const comment_detail = asyncHandler(async (req, res, next) => {
   const comment = await prisma.comment.findUnique({
     where: { id: req.params.commentId },
