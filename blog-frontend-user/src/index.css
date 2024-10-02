@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --toastify-color-success: rgb(29 78 216);
+  }
+  html,
+  body {
+    height: 100%;
+    font-size: 18px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    background-color: rgb(240 253 244);
+  }
+
+  a {
+    text-decoration-line: none;
+    color: rgb(29 78 216);
+  }
+  a:hover,
+  a:focus {
+    outline: none;
+    text-decoration-line: underline;
+  }
+}
