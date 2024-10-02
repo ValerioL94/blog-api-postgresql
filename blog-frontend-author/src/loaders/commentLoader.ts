@@ -10,7 +10,7 @@ async function getRequest(url: string) {
 }
 
 export async function commentLoader(params: Params) {
-  const comment: TCommentDetail = await getRequest(
+  const comment: { comment: TCommentDetail } = await getRequest(
     `/api/posts/${params.postId}/comments/${params.commentId}`
   );
   return comment;

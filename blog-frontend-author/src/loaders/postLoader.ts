@@ -9,11 +9,13 @@ async function getRequest(url: string) {
   return response.json();
 }
 export async function postListLoader() {
-  const posts: TPostList = await getRequest('/api/posts');
+  const posts: { posts: TPostList } = await getRequest('/api/posts');
   return posts;
 }
 
 export async function postLoader(params: Params) {
-  const post: TPostDetail = await getRequest(`/api/posts/${params.postId}`);
+  const post: { post: TPostDetail } = await getRequest(
+    `/api/posts/${params.postId}`
+  );
   return post;
 }
