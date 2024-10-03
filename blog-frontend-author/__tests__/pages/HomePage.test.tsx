@@ -9,22 +9,43 @@ import {
 } from 'react-router-dom';
 import AuthProvider from '../../src/provider/Provider';
 import { AuthContext } from '../../src/provider/context';
-import { TAuthContext } from '../../src/types/types';
+import { TAuthContext, TPostList } from '../../src/types/types';
+import userEvent from '@testing-library/user-event';
 import HomePage from '../../src/pages/HomePage';
+import Posts from '../../src/pages/Posts';
 
 describe('HomePage tests', () => {
-  describe('no auth content rendering', () => {
-    test('display welcome message', () => {
-      const router = createMemoryRouter(routes, { initialEntries: ['/home'] });
+  const user = userEvent.setup();
+  describe('no auth rendering/navigating', () => {
+    const router = createMemoryRouter(routes, { initialEntries: ['/home'] });
+    beforeEach(() => {
       render(
         <AuthProvider>
           <RouterProvider router={router} />
         </AuthProvider>
       );
+    });
+    test('display welcome message', () => {
       expect(screen.getByText(/Welcome to the homepage/i)).toBeInTheDocument();
     });
+    test('signup link', async () => {
+      const signupLink = screen.getByRole('link', { name: /signup/i });
+      expect(signupLink).toBeInTheDocument();
+      await user.click(signupLink);
+      expect(
+        await screen.findByRole('heading', { name: /signup/i })
+      ).toBeInTheDocument();
+    });
+    test('login link', async () => {
+      const loginLink = screen.getByRole('link', { name: /login/i });
+      expect(loginLink).toBeInTheDocument();
+      await user.click(loginLink);
+      expect(
+        await screen.findByRole('heading', { name: /login/i })
+      ).toBeInTheDocument();
+    });
   });
-  describe('auth content rendering', () => {
+  describe('auth rendering/navigating', () => {
     const testContext: TAuthContext = {
       authData: {
         token: 'test',
@@ -32,19 +53,36 @@ describe('HomePage tests', () => {
       },
       setAuthData: () => {},
     };
-    test('display authenticated user message', () => {
-      const testRoutes = createRoutesFromElements(
-        <Route path='home' element={<HomePage />} />
-      );
-      const router = createMemoryRouter(testRoutes, {
-        initialEntries: ['/home'],
-      });
+    const noPosts: TPostList = [];
+    function getNoPosts() {
+      return { posts: noPosts };
+    }
+    const testRoutes = createRoutesFromElements(
+      <>
+        <Route path='/home' element={<HomePage />} />
+        <Route path='/posts' element={<Posts />} loader={() => getNoPosts()} />
+      </>
+    );
+    const router = createMemoryRouter(testRoutes, {
+      initialEntries: ['/home'],
+    });
+    beforeEach(() => {
       render(
         <AuthContext.Provider value={testContext}>
           <RouterProvider router={router} />
         </AuthContext.Provider>
       );
+    });
+    test('display authenticated user message', () => {
       expect(screen.getByText(/testuser/i)).toBeInTheDocument();
+    });
+    test('posts link', async () => {
+      const postsLink = screen.getByRole('link', { name: /post/i });
+      expect(postsLink).toBeInTheDocument();
+      await user.click(postsLink);
+      expect(
+        await screen.findByRole('heading', { name: 'Posts' })
+      ).toBeInTheDocument();
     });
   });
 });
