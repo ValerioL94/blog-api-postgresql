@@ -1,6 +1,6 @@
 import { TCommentDetail } from '../types/types';
 
-const CommentPreview = ({ commentData }: { commentData: TCommentDetail }) => {
+const Comment = ({ commentData }: { commentData: TCommentDetail }) => {
   return (
     <>
       <div className='w-full break-words'>
@@ -14,4 +14,4 @@ const CommentPreview = ({ commentData }: { commentData: TCommentDetail }) => {
   );
 };
 
-export default CommentPreview;
+export default Comment;
