@@ -59,7 +59,7 @@ const CommentFormCreate = () => {
           name='content'
           id='content'
           className='block w-full py-1 px-2 mb-3 resize-none  border-2 border-solid border-gray-500 rounded-md text-sm hover:border-blue-600 focus:border-blue-700 outline-none'
-          rows={5}
+          rows={3}
           value={formData.content}
           onChange={handleInputChange}
           placeholder='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque hendrerit efficitur lacus nec fermentum. Sed nisl mauris, dapibus aliquam leo at, efficitur blandit diam.'
