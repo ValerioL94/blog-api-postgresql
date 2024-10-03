@@ -1,6 +1,6 @@
 import parse from 'html-react-parser';
 import { TPostDetail } from '../types/types';
-import CommentPreview from './CommentPreview';
+import Comment from './Comment';
 
 const PostDetail = ({ postData }: { postData: TPostDetail }) => {
   return (
@@ -36,7 +36,7 @@ const PostDetail = ({ postData }: { postData: TPostDetail }) => {
         {!postData.comments && <h2>Fetching comments...</h2>}
         {postData.comments && postData.comments.length > 0 ? (
           postData.comments.map((comment) => (
-            <CommentPreview key={comment.id} commentData={comment} />
+            <Comment key={comment.id} commentData={comment} />
           ))
         ) : (
           <>
