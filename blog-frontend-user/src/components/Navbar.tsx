@@ -2,8 +2,8 @@ import { NavLink } from 'react-router-dom';
 const Navbar = () => {
   const linkClass = ({ isActive }: { isActive: boolean }): string =>
     isActive
-      ? 'text-blue-800 bg-white border-2 border-solid border-blue-700 rounded-lg p-1 hover:border-lime-400 focus:border-lime-400 hover:no-underline focus:no-underline focus:outline-none'
-      : 'text-white border-2 border-solid border-blue-700 rounded-lg p-1 hover:border-lime-400 focus:border-lime-400 hover:no-underline focus:no-underline focus:outline-none ';
+      ? 'text-blue-800 bg-white border-2 border-solid border-blue-700 rounded-lg p-1 hover:border-sky-400 focus:border-sky-400 hover:no-underline focus:no-underline focus:outline-none'
+      : 'text-white border-2 border-solid border-blue-700 rounded-lg p-1 hover:border-sky-400 focus:border-sky-400 hover:no-underline focus:no-underline focus:outline-none ';
 
   return (
     <nav className='w-full max-w-3xl'>
