@@ -53,6 +53,10 @@ export const post_update = asyncHandler(async (req, res, next) => {
 });
 
 export const post_delete = asyncHandler(async (req, res, next) => {
-  await prisma.post.delete({ where: { id: req.params.postId } });
+  const deleteComments = prisma.comment.deleteMany({
+    where: { postId: req.params.postId },
+  });
+  const deletePost = prisma.post.delete({ where: { id: req.params.postId } });
+  await prisma.$transaction([deleteComments, deletePost]);
   res.json({ message: 'Post deleted successfully' });
 });
