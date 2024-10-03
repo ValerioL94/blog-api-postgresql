@@ -40,7 +40,7 @@ const PostDetail = ({ postData }: { postData: TPostDetail }) => {
           ))
         ) : (
           <>
-            <h2>There are no comments.</h2>
+            <p>There are no comments.</p>
             <hr />
           </>
         )}
