@@ -11,11 +11,13 @@ const HomePage = () => {
         There is no registration needed, so go to <Link to='/posts'>posts</Link>{' '}
         and leave a comment if you like!
       </p>
-      <img
-        className='max-w-full rounded-br rounded-bl'
-        src='/assets/images/andrew-s-ouo1hbizWwo-unsplash.jpg'
-        alt='a dog and a cat enjoying a sunny day'
-      />
+      <div className='max-w-full flex justify-center'>
+        <img
+          className='max-w-96 rounded-br rounded-bl'
+          src='/assets/images/andrew-s-ouo1hbizWwo-unsplash.jpg'
+          alt='a dog and a cat enjoying a sunny day'
+        />
+      </div>
     </div>
   );
 };

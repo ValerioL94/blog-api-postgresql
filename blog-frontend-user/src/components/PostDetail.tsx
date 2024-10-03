@@ -14,10 +14,6 @@ const PostDetail = ({ postData }: { postData: TPostDetail }) => {
             <strong>Author: </strong>
             {postData.author.username}
           </p>
-          <p>
-            <strong>Published: </strong>
-            {postData.published ? 'Yes' : 'No'}
-          </p>
         </div>
         <div>
           <p>

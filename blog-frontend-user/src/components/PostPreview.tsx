@@ -15,15 +15,11 @@ const PostPreview = ({ postData }: { postData: TPostPreview }) => {
           {postData.author.username}
         </p>
         <p>
-          <strong>Published: </strong>
-          {postData.published ? 'Yes' : 'No'}
-        </p>
-        <p>
           <strong>Created: </strong>
           {new Date(postData.createdAt).toLocaleString()}
         </p>
         <p>
-          <strong>Updated: </strong>
+          <strong>Last updated: </strong>
           {new Date(postData.updatedAt).toLocaleString()}
         </p>
       </div>
