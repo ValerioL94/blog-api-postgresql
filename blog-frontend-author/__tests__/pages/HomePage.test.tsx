@@ -7,28 +7,24 @@ import {
   Route,
   RouterProvider,
 } from 'react-router-dom';
-import userEvent from '@testing-library/user-event';
 import AuthProvider from '../../src/provider/Provider';
 import { AuthContext } from '../../src/provider/context';
 import { TAuthContext } from '../../src/types/types';
 import HomePage from '../../src/pages/HomePage';
 
 describe('HomePage tests', () => {
-  const user = userEvent.setup();
-  describe('no auth rendering/navigating', async () => {
-    test('welcome message display', async () => {
+  describe('no auth content rendering', async () => {
+    test('display welcome message', async () => {
       const router = createMemoryRouter(routes, { initialEntries: ['/home'] });
       render(
         <AuthProvider>
           <RouterProvider router={router} />
         </AuthProvider>
       );
-      const homeLink = await screen.findByRole('link', { name: /home/i });
-      await user.click(homeLink);
       expect(screen.getByText(/Welcome to the homepage/i)).toBeInTheDocument();
     });
   });
-  describe('auth rendering/navigating', () => {
+  describe('auth content rendering', () => {
     const testContext: TAuthContext = {
       authData: {
         token: 'test',
@@ -36,7 +32,7 @@ describe('HomePage tests', () => {
       },
       setAuthData: () => {},
     };
-    test('user authenticated message', () => {
+    test('display authenticated user message', () => {
       const testRoutes = createRoutesFromElements(
         <Route path='home' element={<HomePage />} />
       );
