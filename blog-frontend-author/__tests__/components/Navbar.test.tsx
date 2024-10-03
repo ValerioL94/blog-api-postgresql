@@ -29,26 +29,39 @@ describe('navbar component tests', () => {
         </AuthProvider>
       );
     });
-    test('render Home, Signup, Login, About links', () => {
-      expect(screen.getByRole('link', { name: /home/i })).toBeInTheDocument();
-      expect(screen.getByRole('link', { name: /signup/i })).toBeInTheDocument();
-      expect(screen.getByRole('link', { name: /login/i })).toBeInTheDocument();
-      expect(screen.getByRole('link', { name: /about/i })).toBeInTheDocument();
+    test('navbar links count', () => {
+      const navLink = screen.getByRole('list');
+      expect(navLink).toBeInTheDocument();
+      expect(navLink.childElementCount).toEqual(4);
     });
-    test('navigate to Home, Signup, Login, About pages', async () => {
-      await user.click(screen.getByRole('link', { name: /home/i }));
+    test('home link rendering/navigating', async () => {
+      const homeLink = screen.getByRole('link', { name: /home/i });
+      expect(homeLink).toBeInTheDocument();
+      await user.click(homeLink);
       expect(
         screen.getByRole('heading', { name: /homepage/i })
       ).toBeInTheDocument();
-      await user.click(screen.getByRole('link', { name: /signup/i }));
+    });
+    test('signup link rendering/navigating', async () => {
+      const signupLink = screen.getByRole('link', { name: /signup/i });
+      expect(signupLink).toBeInTheDocument();
+      await user.click(signupLink);
       expect(
         screen.getByRole('heading', { name: /signup/i })
       ).toBeInTheDocument();
-      await user.click(screen.getByRole('link', { name: /login/i }));
+    });
+    test('login link rendering/navigating', async () => {
+      const loginLink = screen.getByRole('link', { name: /login/i });
+      expect(loginLink).toBeInTheDocument();
+      await user.click(loginLink);
       expect(
         screen.getByRole('heading', { name: /login/i })
       ).toBeInTheDocument();
-      await user.click(screen.getByRole('link', { name: /about/i }));
+    });
+    test('about link rendering/navigating', async () => {
+      const aboutLink = screen.getByRole('link', { name: /about/i });
+      expect(aboutLink).toBeInTheDocument();
+      await user.click(aboutLink);
       expect(
         screen.getByRole('heading', { name: /about/i })
       ).toBeInTheDocument();
@@ -58,7 +71,7 @@ describe('navbar component tests', () => {
     const testContext: TAuthContext = {
       authData: {
         token: 'test',
-        user: { id: 'test', username: 'test', email: 'test@gmail.com' },
+        user: { id: '123', username: 'testuser', email: 'testuser@gmail.com' },
       },
       setAuthData: () => {},
     };
@@ -66,8 +79,6 @@ describe('navbar component tests', () => {
     const testRoutes = createRoutesFromElements(
       <Route path='/' errorElement={<ErrorPage />} element={<GlobalLayout />}>
         <Route path='home' element={<HomePage />} />
-        <Route path='about' element={<About />} />
-        <Route path='logout' element={<Logout />} />
         <Route
           path='/posts'
           loader={() => {
@@ -75,10 +86,12 @@ describe('navbar component tests', () => {
           }}
           element={<Posts />}
         />
+        <Route path='logout' element={<Logout />} />
+        <Route path='about' element={<About />} />
       </Route>
     );
     const router = createMemoryRouter(testRoutes, {
-      initialEntries: ['/'],
+      initialEntries: ['/home'],
     });
     beforeEach(() => {
       render(
@@ -87,26 +100,40 @@ describe('navbar component tests', () => {
         </AuthContext.Provider>
       );
     });
-    test('render Home, Posts, Logout, About links', () => {
-      expect(screen.getByRole('link', { name: /home/i })).toBeInTheDocument();
-      expect(screen.getByRole('link', { name: /posts/i })).toBeInTheDocument();
-      expect(screen.getByRole('link', { name: /logout/i })).toBeInTheDocument();
-      expect(screen.getByRole('link', { name: /about/i })).toBeInTheDocument();
+    test('navbar links count', () => {
+      const navLink = screen.getByRole('list');
+      expect(navLink).toBeInTheDocument();
+      expect(navLink.childElementCount).toEqual(4);
     });
-    test('navigate to Home, Posts, Logout, About pages', async () => {
-      await user.click(screen.getByRole('link', { name: /home/i }));
+    test('home link rendering/navigating', async () => {
+      const homeLink = screen.getByRole('link', { name: /home/i });
+      expect(homeLink).toBeInTheDocument();
+      await user.click(homeLink);
       expect(
         screen.getByRole('heading', { name: /homepage/i })
       ).toBeInTheDocument();
-      await user.click(screen.getByRole('link', { name: /posts/i }));
+      expect(screen.getByText('testuser')).toBeInTheDocument();
+    });
+    test('posts link rendering/navigating', async () => {
+      const postsLink = screen.getByRole('link', { name: /posts/i });
+      expect(postsLink).toBeInTheDocument();
+      await user.click(postsLink);
       expect(
         screen.getByRole('heading', { name: /Posts/ })
       ).toBeInTheDocument();
-      await user.click(screen.getByRole('link', { name: /logout/i }));
+    });
+    test('logout link rendering/navigating', async () => {
+      const logoutLink = screen.getByRole('link', { name: /logout/i });
+      expect(logoutLink).toBeInTheDocument();
+      await user.click(logoutLink);
       expect(
         screen.getByRole('heading', { name: /logging out/i })
       ).toBeInTheDocument();
-      await user.click(screen.getByRole('link', { name: /about/i }));
+    });
+    test('about link rendering/navigating', async () => {
+      const aboutLink = screen.getByRole('link', { name: /about/i });
+      expect(aboutLink).toBeInTheDocument();
+      await user.click(aboutLink);
       expect(
         screen.getByRole('heading', { name: /about/i })
       ).toBeInTheDocument();
