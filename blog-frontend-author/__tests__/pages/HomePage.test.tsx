@@ -13,8 +13,8 @@ import { TAuthContext } from '../../src/types/types';
 import HomePage from '../../src/pages/HomePage';
 
 describe('HomePage tests', () => {
-  describe('no auth content rendering', async () => {
-    test('display welcome message', async () => {
+  describe('no auth content rendering', () => {
+    test('display welcome message', () => {
       const router = createMemoryRouter(routes, { initialEntries: ['/home'] });
       render(
         <AuthProvider>
