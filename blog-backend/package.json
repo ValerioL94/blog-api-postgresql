@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "API only backend site express-typescript-postgresql-prisma",
   "main": "app.js",
-  "type": "module",
   "scripts": {
     "test": "NODE_ENV=test && vitest run --pool=forks",
     "dev": "NODE_ENV=development && tsx --watch --env-file=.env app.ts",
