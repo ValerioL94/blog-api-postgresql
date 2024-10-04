@@ -1,12 +1,14 @@
 import { Params } from 'react-router-dom';
 import { TCommentInsert } from '../types/types';
 
+const server = 'https://blog-api-backend-eoez.onrender.com';
+
 async function postRequest(
   url: string,
   method: string,
   data: TCommentInsert | null
 ) {
-  const response = await fetch(url, {
+  const response = await fetch(`${server}${url}`, {
     method,
     headers: {
       'Content-Type': 'application/json',
