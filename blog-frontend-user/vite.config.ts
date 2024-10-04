@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:3000',
+        target: 'https://blog-api-backend-eoez.onrender.com',
         changeOrigin: true,
       },
     },
