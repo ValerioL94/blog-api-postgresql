@@ -1,10 +1,12 @@
+const server = 'https://blog-api-backend-eoez.onrender.com';
+
 async function postRequest(
   url: string,
   data: {
     [k: string]: FormDataEntryValue;
   }
 ) {
-  const response = await fetch(url, {
+  const response = await fetch(`${server}${url}`, {
     method: 'post',
     headers: {
       'Content-Type': 'application/json',

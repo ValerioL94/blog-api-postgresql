@@ -1,6 +1,8 @@
 import { Params } from 'react-router-dom';
 import { TPostCreate, TPostUpdate } from '../types/types';
 
+const server = 'https://blog-api-backend-eoez.onrender.com';
+
 // authenticated post request
 async function authRequest(
   url: string,
@@ -8,7 +10,7 @@ async function authRequest(
   data: TPostCreate | TPostUpdate | { id: string },
   token: string
 ) {
-  const response = await fetch(url, {
+  const response = await fetch(`${server}${url}`, {
     method,
     headers: {
       'Content-Type': 'application/json',
