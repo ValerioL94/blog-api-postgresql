@@ -8,7 +8,7 @@
     "test": "NODE_ENV=test && vitest run --pool=forks",
     "dev": "NODE_ENV=development && tsx --watch --env-file=.env app.ts",
     "build": "tsc",
-    "start": "prisma db push && node dist/app.js",
+    "start": "prisma db push && node app.js",
     "kill": "kill -9 $(lsof -t -i:3000)"
   },
   "repository": {
