@@ -1,12 +1,12 @@
-import { router as postRouter } from '../src/routes/post';
+import { router as postRouter } from '../routes/post';
 import request from 'supertest';
 import express from 'express';
 import { describe, it, expect, beforeAll } from 'vitest';
-import { prisma } from '../src/prisma/client';
-import { TPostCreateBody, TSignupBody } from '../src/types/types';
+import { prisma } from '../prisma/client';
+import { TPostCreateBody, TSignupBody } from '../types/types';
 import jwt from 'jsonwebtoken';
 import passport from 'passport';
-import { jwtStrategy } from '../src/utils/jwt';
+import { jwtStrategy } from '../utils/jwt';
 
 const app = express();
 

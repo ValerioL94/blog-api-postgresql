@@ -1,4 +1,4 @@
-import { router as apiRouter } from '../src/routes/api';
+import { router as apiRouter } from '../routes/api';
 import request from 'supertest';
 import express from 'express';
 import { describe, it, expect } from 'vitest';

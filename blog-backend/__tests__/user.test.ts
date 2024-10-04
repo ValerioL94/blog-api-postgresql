@@ -1,9 +1,9 @@
-import { router as userRouter } from '../src/routes/user';
+import { router as userRouter } from '../routes/user';
 import request from 'supertest';
 import express from 'express';
 import { describe, it, expect, afterAll } from 'vitest';
-import { prisma } from '../src/prisma/client';
-import { TLoginBody, TSignupBody } from '../src/types/types';
+import { prisma } from '../prisma/client';
+import { TLoginBody, TSignupBody } from '../types/types';
 
 const app = express();
 
