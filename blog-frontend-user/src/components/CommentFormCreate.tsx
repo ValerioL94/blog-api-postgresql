@@ -3,12 +3,14 @@ import ErrorList from './ErrorList';
 import { TCommentInsert, TValidationErrors } from '../types/types';
 import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
+import { Filter } from 'bad-words';
 
 const CommentFormCreate = () => {
   const initialFormState: TCommentInsert = useMemo(
     () => ({ username: '', content: '' }),
     []
   );
+  const filter = new Filter();
   const navigate = useNavigate();
   const response = useActionData();
   const submit = useSubmit();
@@ -19,6 +21,22 @@ const CommentFormCreate = () => {
   ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (
+      filter.isProfane(formData.username) ||
+      filter.isProfane(formData.content)
+    ) {
+      setFormErrors([
+        {
+          message:
+            'Inappropriate words detected, please review your username/comment and try again',
+        },
+      ]);
+    } else {
+      submit({ ...formData }, { method: 'POST' });
+    }
   };
   useEffect(() => {
     if (response) {
@@ -35,14 +53,7 @@ const CommentFormCreate = () => {
   }, [response, initialFormState, navigate]);
   return (
     <>
-      <Form
-        onSubmit={(e) => {
-          e.preventDefault();
-          submit({ ...formData }, { method: 'POST' });
-        }}
-        className='p-1'
-        method='POST'
-      >
+      <Form onSubmit={handleFormSubmit} className='p-1' method='POST'>
         <label htmlFor='username'>Username: </label>
         <input
           type='text'
